@@ -1,8 +1,8 @@
 /* -*- P4_16 -*- */
-#include "common/headers.p4"
-#include "common/utils.p4"
 #include <core.p4>
 #include <tna.p4>
+#include "common/headers.p4"
+#include "common/utils.p4"
 
 /*************************************************************************
 **************  I N G R E S S   P R O C E S S I N G   *******************

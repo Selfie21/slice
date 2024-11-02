@@ -8,11 +8,7 @@ net = NetworkAPI(auto_arp_tables=True)
 
 # Network general options
 net.setLogLevel('info')
-net.enableCli()
-
-# Tofino compiler
 net.setCompiler(compilerClass=BF_P4C, sde=SDE, sde_install=SDE_INSTALL)
-net.enableCli()
 
 # Network definition
 net.addTofino("s1", sde=SDE, sde_install=SDE_INSTALL)
