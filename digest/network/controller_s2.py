@@ -1,5 +1,5 @@
 # Pipe variable
-p4 = bfrt.base.pipe
+p4 = bfrt.digest.pipe
 
 # Table variable
 l3 = p4.Ingress.ipv4_lpm

@@ -142,10 +142,6 @@ header gre_t {
   bit<16> proto;
 }
 
-struct metadata_t {
-  bit<8> meterTag;
-}
-
 struct header_t {
   ethernet_t ethernet;
   vlan_t vlan;
