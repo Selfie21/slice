@@ -1,0 +1,11 @@
+/home/p4/Documents/me/slice/build/CMakeFiles/install.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/list_install_components.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/rebuild_cache.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/edit_cache.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/uninstall.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/meter-tofino.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/install/strip.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/meter.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/driver.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/install/local.dir
+/home/p4/Documents/me/slice/build/CMakeFiles/bf-p4c.dir

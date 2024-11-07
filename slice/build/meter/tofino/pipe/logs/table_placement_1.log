@@ -1,0 +1,113 @@
+Table Placement INITIAL, not ignoring container conflicts
+Table placement starting on pipe with DEFAULT PLACEMENT approach
+ingress: [4] 1 11
+  m_meter_0{ E 22+1, 0 0K }
+    meter Ingress.meter  256
+  m_filter_0{ E -2+1, 0 0K }
+  cond-2(ingress::hdr.ipv4.$valid == 1; => $true, 1 => $false)
+    $true: [5]
+      ipv4_lpm_0{ T 32+2, 8 4K }
+egress: [6]
+
+stage 0, work: [ 2413363 ], partly placed 0, placed 0
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 local_tinds=0 }
+m_meter_0 is not a gateway! Aborting search for merge choices
+try_place_table(m_meter_0, stage=0)
+    Initial # of stages is 0, initial # of entries is 256
+  Try_alloc_all for Table use
+  Trying to allocate layout for m_meter_0 
+  Picking layout option for table : m_meter_0 with requested entries : 256
+  picked layout for m_meter_0 FormatType(022) layout: 256eV ixbar:4B/32b match:3B/22b gh:1 ov:12
+  way:{ g:3 e:0 w:1 1 1 1 1 }
+  entries:12288 srams:6 local_tinds: 0 maprams:2 tcams:0 afi:0
+  Trying to allocate adb for m_meter_0 
+  Trying to allocate imem for m_meter_0 
+  Entries : 12288, needed_entries: 256, need_more: 0
+    Selected stage: 0    Furthest stage: 0
+    try_place_table returning 12288 of m_meter_0 in stage 0
+  Table is  placed
+    Pl vector: m_meter_0 
+  - skipping m_filter_0 due to in-sequence control dependence on m_meter_0
+  - skipping cond-2 because it depends on m_meter_0
+    - removing ipv4_lpm_0 from merge list because it depends on m_meter_0
+    - skipping gateway cond-2 until mergeable tables are available
+found 1 tables that could be placed: [ m_meter_0 ]
+Initial best is first table seen: m_meter_0
+Adding table:m_meter_0 in the initial stage option
+placing 12288 entries of m_meter_0 ( Ingress.m_meter )  in stage 0(0) FormatType(022)
+stage 0, work: [ 2413363 ], partly placed 0, placed 1
+    { id=1 ram=6 tcam=0 mram=2 eixb=4 tixb=0 malu=0 salu=0 local_tinds=0 }
+    - skipping m_meter_0 as its already done
+m_filter_0 is not a gateway! Aborting search for merge choices
+try_place_table(m_filter_0, stage=0)
+    - dependency between m_meter_0 and table advances stage
+    Initial # of stages is 1, initial # of entries is 8
+  Try_alloc_all for Table use
+  Trying to allocate layout for m_filter_0 
+  Picking layout option for table : m_filter_0 with requested entries : 8
+  picked layout for m_filter_0 FormatType(02) layout: 8eV ixbar:1B/8b match:0B/-2b gh:1 ov:1
+  way:{ g:5 e:0 w:1 1 }
+  entries:5120 srams:1 local_tinds: 0 maprams:0 tcams:0 afi:0 I
+  Trying to allocate adb for m_filter_0 
+  Trying to allocate imem for m_filter_0 
+  Entries : 5120, needed_entries: 8, need_more: 0
+    Selected stage: 1    Furthest stage: 1
+    try_place_table returning 5120 of m_filter_0 in stage 1
+  Table is  placed
+    Pl vector: m_filter_0 
+  - skipping cond-2 because it depends on m_filter_0
+    - removing ipv4_lpm_0 from merge list because it depends on m_filter_0
+    - skipping gateway cond-2 until mergeable tables are available
+found 1 tables that could be placed: [ m_filter_0 ]
+Initial best is first table seen: m_filter_0
+Adding table:m_filter_0 in the initial stage option
+placing 5120 entries of m_filter_0 ( Ingress.m_filter )  in stage 1(10) FormatType(02)
+stage 1, work: [ 2413363 ], partly placed 0, placed 2
+    { id=1 ram=1 tcam=0 mram=0 eixb=1 tixb=0 malu=0 salu=0 local_tinds=0 }
+    - skipping m_meter_0 as its already done
+    - skipping m_filter_0 as its already done
+try_place_table(cond-2, stage=1)
+    Merging with match table ipv4_lpm_0 and tag $true
+    - dependency between m_filter_0 and table advances stage
+    Initial # of stages is 2, initial # of entries is 4096
+  Try_alloc_all for Table use
+  Trying to allocate layout for ipv4_lpm_0 
+  Picking layout option for table : ipv4_lpm_0 with requested entries : 4096
+  picked layout for ipv4_lpm_0 FormatType(02) layout: 4096tV ixbar:4B/32b match:4B/32b adb:8/8 ov:2
+  entries:4096 srams:3 local_tinds: 0 maprams:0 tcams:8 afi:0
+  Trying to allocate adb for ipv4_lpm_0 
+  Trying to allocate imem for ipv4_lpm_0 
+  Entries : 4096, needed_entries: 4096, need_more: 0
+    Selected stage: 2    Furthest stage: 2
+    try_place_table returning 4096 of ipv4_lpm_0 in stage 2
+  Table is  placed
+  Gateway is  placed
+    Pl vector: ipv4_lpm_0 
+found 1 tables that could be placed: [ ipv4_lpm_0 ]
+Initial best is first table seen: ipv4_lpm_0
+Adding table:ipv4_lpm_0 in the initial stage option
+placing 4096 entries of ipv4_lpm_0 ( Ingress.ipv4_lpm )  (with gw cond-2, result tag $true) in stage 2(20) FormatType(02)
+Adding complete placement for resource mode:0
+Found a complete solution that fit the number of stages required
+Evaluating complete solution with resource:0
+Placement error(s):0 stages required:3
+Updating best final placement with this one
+Table placement placed 3 tables in 3 stages
+  Table ipv4_lpm_0 logical id 0x20 entries=4096 stage=2
+  Gateway cond-2 is also logical id 0x20
+  Table m_filter_0 logical id 0x10 entries=5120 stage=1
+  Table m_meter_0 logical id 0x0 entries=12288 stage=0
+    attached table Ingress.meter entries=256
+Finished table placement decisions pipe
+folding gateway cond-2 onto ipv4_lpm_0
+  Adding Ternary Indirect table to ipv4_lpm_0
+  Adding Action Data Table to ipv4_lpm_0
+table placement completed pipe
+ingress: [4] 0 00
+  0: m_meter_0{ E 22+12, 0 [1x3 3K 3K 3K 3K] }
+    meter Ingress.meter  256
+  10: m_filter_0{ E -2+1, 0 [1x5 5K] }
+  20: ipv4_lpm_0(ingress::hdr.ipv4.$valid == 1;, 1 => $false){ GT 32+2, 8 4K }
+    $false: [7]
+egress: [6]
+

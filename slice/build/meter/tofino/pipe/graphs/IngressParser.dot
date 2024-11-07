@@ -1,0 +1,39 @@
+digraph IngressParser {
+subgraph clusterIngressParser {
+graph [
+fontsize="22pt", label=IngressParser, style=bold];
+0[label="start
+(ig_intr_md.resubmit_flag)", margin="", shape=rectangle, style=solid];
+1[label=TofinoIngressParser_parse_resubmit, margin="", shape=rectangle, style=solid];
+2[label="TofinoIngressParser_parse_port_metadata
+(hdr.ethernet.etherType)", margin="", shape=rectangle, style=solid];
+3[label="parse_vlan
+(hdr.vlan.etherType)", margin="", shape=rectangle, style=solid];
+4[label="parse_ipv4
+(hdr.ipv4.protocol)", margin="", shape=rectangle, style=solid];
+5[label="parse_ipv6
+(hdr.ipv6.nextHdr)", margin="", shape=rectangle, style=solid];
+6[label=parse_tcp, margin="", shape=rectangle, style=solid];
+7[label=parse_udp, margin="", shape=rectangle, style=solid];
+8[label=accept, margin="", shape=rectangle, style=solid];
+9[label=reject, margin="", shape=rectangle, style=solid];
+0 -> 1[label="1w1"];
+0 -> 2[label="1w0"];
+0 -> 9[label=fallthrough];
+1 -> 9[label=always];
+2 -> 3[label="16w0x8100"];
+2 -> 4[label="16w0x800"];
+2 -> 5[label="16w0x86dd"];
+2 -> 8[label=default];
+3 -> 4[label="16w0x800"];
+3 -> 8[label=default];
+4 -> 6[label="8w6"];
+4 -> 7[label="8w17"];
+4 -> 8[label=default];
+5 -> 6[label="8w6"];
+5 -> 7[label="8w17"];
+5 -> 8[label=default];
+6 -> 8[label=always];
+7 -> 8[label=always];
+}
+}

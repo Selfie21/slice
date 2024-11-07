@@ -1,0 +1,1123 @@
+{
+    "schema_version": "1.0.0",
+    "symbols": [
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 104,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "Ingress.meter",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 98,
+                "column": 43
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 172,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "IngressDeparser.digest_inst",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 166,
+                "column": 22
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 175,
+                    "column": 28
+                }
+            ],
+            "symbol_name": "IngressDeparser.ipv4_checksum",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 165,
+                "column": 14
+            },
+            "symbol_type": "Declaration_Instance_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 196,
+                    "column": 8
+                }
+            ],
+            "symbol_name": "pipe",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 195,
+                "column": 48
+            },
+            "symbol_type": "Declaration_Instance_Type_Specialized"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 125,
+                    "column": 11
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 144,
+                    "column": 7
+                }
+            ],
+            "symbol_name": "Ingress.drop",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 100,
+                "column": 10
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 143,
+                    "column": 7
+                }
+            ],
+            "symbol_name": "Ingress.ipv4_forward",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 133,
+                "column": 10
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 113,
+                    "column": 11
+                }
+            ],
+            "symbol_name": "Ingress.m_update",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 103,
+                "column": 10
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 114,
+                    "column": 11
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 116,
+                    "column": 24
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 126,
+                    "column": 11
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 128,
+                    "column": 24
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 145,
+                    "column": 7
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 148,
+                    "column": 22
+                }
+            ],
+            "symbol_name": "NoAction",
+            "declaration": {
+                "file": "/home/p4/mysde/bf-sde-9.13.3/install/share/p4c/p4include/core.p4",
+                "line": 70,
+                "column": 8
+            },
+            "symbol_type": "P4Action"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 156,
+                    "column": 7
+                }
+            ],
+            "symbol_name": "Ingress.ipv4_lpm",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 140,
+                "column": 9
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 153,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "Ingress.m_filter",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 120,
+                "column": 9
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 152,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "Ingress.m_meter",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 108,
+                "column": 9
+            },
+            "symbol_type": "P4Table"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 135,
+                    "column": 28
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 136,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "Ingress.hdr.ethernet.dstAddr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 92,
+                "column": 32
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 135,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "Ingress.hdr.ethernet.srcAddr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 92,
+                "column": 32
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 155,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "Ingress.hdr.ipv4",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 92,
+                "column": 32
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 141,
+                    "column": 13
+                }
+            ],
+            "symbol_name": "Ingress.hdr.ipv4.dstAddr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 92,
+                "column": 32
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 110,
+                    "column": 11
+                }
+            ],
+            "symbol_name": "Ingress.hdr.ipv4.srcAddr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 92,
+                "column": 32
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 137,
+                    "column": 5
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 137,
+                    "column": 20
+                }
+            ],
+            "symbol_name": "Ingress.hdr.ipv4.ttl",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 92,
+                "column": 32
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 105,
+                    "column": 7
+                }
+            ],
+            "symbol_name": "Ingress.ig_dprsr_md.digest_type",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 95,
+                "column": 65
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 100,
+                    "column": 19
+                }
+            ],
+            "symbol_name": "Ingress.ig_dprsr_md.drop_ctl",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 95,
+                "column": 65
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 134,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "Ingress.ig_tm_md.ucast_egress_port",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 96,
+                "column": 59
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 136,
+                    "column": 28
+                }
+            ],
+            "symbol_name": "Ingress.ipv4_forward.dstAddr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 133,
+                "column": 33
+            },
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 134,
+                    "column": 34
+                }
+            ],
+            "symbol_name": "Ingress.ipv4_forward.port",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 133,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 104,
+                    "column": 48
+                }
+            ],
+            "symbol_name": "Ingress.m_update.meterIndex",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 103,
+                "column": 26
+            },
+            "symbol_type": "Parameter_Type_Bits"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 104,
+                    "column": 7
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 122,
+                    "column": 11
+                }
+            ],
+            "symbol_name": "Ingress.meta.tmp_digest.meterTag",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 92,
+                "column": 54
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 181,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ethernet",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 181,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 176,
+                    "column": 42
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.diffserv",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 179,
+                    "column": 10
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.dstAddr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 176,
+                    "column": 61
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.ecn",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 177,
+                    "column": 54
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.flags",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 178,
+                    "column": 10
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.fragOffset",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 175,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.hdrChecksum",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 177,
+                    "column": 29
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.identification",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 176,
+                    "column": 28
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.ihl",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 178,
+                    "column": 45
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.protocol",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 178,
+                    "column": 64
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.srcAddr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 177,
+                    "column": 10
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.totalLen",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 178,
+                    "column": 31
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.ttl",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 176,
+                    "column": 10
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv4.version",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 181,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.ipv6",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 181,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.tcp",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 181,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.udp",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 181,
+                    "column": 14
+                }
+            ],
+            "symbol_name": "IngressDeparser.hdr.vlan",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 56
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 171,
+                    "column": 9
+                }
+            ],
+            "symbol_name": "IngressDeparser.ig_dprsr_md.digest_type",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 164,
+                "column": 62
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [],
+            "symbol_name": "IngressDeparser.ig_dprsr_md.mirror_type",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 164,
+                "column": 62
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 172,
+                    "column": 27
+                }
+            ],
+            "symbol_name": "IngressDeparser.meta.tmp_digest.meterTag",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 75
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 181,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "IngressDeparser.pkt",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 163,
+                "column": 36
+            },
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 33,
+                    "column": 17
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.ethernet",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 34,
+                    "column": 23
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.ethernet.etherType",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 57,
+                    "column": 17
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.ipv4",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 58,
+                    "column": 23
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.ipv4.protocol",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 69,
+                    "column": 17
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.ipv6",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 70,
+                    "column": 23
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.ipv6.nextHdr",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 81,
+                    "column": 17
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.tcp",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 86,
+                    "column": 17
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.udp",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 47,
+                    "column": 17
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.vlan",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 48,
+                    "column": 23
+                }
+            ],
+            "symbol_name": "IngressParser.hdr.vlan.etherType",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 50
+            },
+            "symbol_type": "Parameter_Type_Struct"
+        },
+        {
+            "references": [
+                {
+                    "file": "common/utils.p4",
+                    "line": 7,
+                    "column": 17
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 28,
+                    "column": 30
+                }
+            ],
+            "symbol_name": "IngressParser.ig_intr_md",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 22,
+                "column": 55
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "meter.p4",
+                    "line": 28,
+                    "column": 30
+                }
+            ],
+            "symbol_name": "IngressParser.ig_intr_md.$valid",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 22,
+                "column": 55
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "common/utils.p4",
+                    "line": 8,
+                    "column": 23
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 28,
+                    "column": 30
+                }
+            ],
+            "symbol_name": "IngressParser.ig_intr_md.resubmit_flag",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 22,
+                "column": 55
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "common/utils.p4",
+                    "line": 7,
+                    "column": 5
+                },
+                {
+                    "file": "common/utils.p4",
+                    "line": 20,
+                    "column": 5
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 28,
+                    "column": 25
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 33,
+                    "column": 5
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 47,
+                    "column": 5
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 57,
+                    "column": 5
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 69,
+                    "column": 5
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 81,
+                    "column": 5
+                },
+                {
+                    "file": "meter.p4",
+                    "line": 86,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "IngressParser.pkt",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 21,
+                "column": 32
+            },
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [
+                {
+                    "file": "common/utils.p4",
+                    "line": 30,
+                    "column": 17
+                }
+            ],
+            "symbol_name": "TofinoEgressParser.eg_intr_md",
+            "declaration": {
+                "file": "common/utils.p4",
+                "line": 27,
+                "column": 59
+            },
+            "symbol_type": "Parameter_Type_Header"
+        },
+        {
+            "references": [
+                {
+                    "file": "common/utils.p4",
+                    "line": 30,
+                    "column": 5
+                }
+            ],
+            "symbol_name": "TofinoEgressParser.pkt",
+            "declaration": {
+                "file": "common/utils.p4",
+                "line": 25,
+                "column": 37
+            },
+            "symbol_type": "Parameter_Type_Extern"
+        },
+        {
+            "references": [],
+            "symbol_name": "cond-1",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 155,
+                "column": 5
+            },
+            "symbol_type": "IfStatement"
+        },
+        {
+            "references": [],
+            "symbol_name": "cond-2",
+            "declaration": {
+                "file": "meter.p4",
+                "line": 155,
+                "column": 5
+            },
+            "symbol_type": "IfStatement"
+        }
+    ],
+    "source_root": "/home/p4/Documents/me/slice"
+}

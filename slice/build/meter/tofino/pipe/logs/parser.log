@@ -1,0 +1,29 @@
+ingress::parse_tcp is split into 2 states:
+  ingress::parse_tcp
+  ingress::parse_tcp.$split_0
+ingress::parse_ipv4 is split into 2 states:
+  ingress::parse_ipv4
+  ingress::parse_ipv4.$split_0
+ingress::parse_ipv6 is split into 2 states:
+  ingress::parse_ipv6
+  ingress::parse_ipv6.$split_0
+egress::min_parse_depth_accept_loop.$it3 is split into 2 states:
+  egress::min_parse_depth_accept_loop.$it3
+  egress::min_parse_depth_accept_loop.$it3.$split_0
+egress::min_parse_depth_accept_loop.$it2 is split into 2 states:
+  egress::min_parse_depth_accept_loop.$it2
+  egress::min_parse_depth_accept_loop.$it2.$split_0
+egress::min_parse_depth_accept_loop.$it1 is split into 2 states:
+  egress::min_parse_depth_accept_loop.$it1
+  egress::min_parse_depth_accept_loop.$it1.$split_0
+egress::min_parse_depth_accept_loop is split into 2 states:
+  egress::min_parse_depth_accept_loop
+  egress::min_parse_depth_accept_loop.$split_0
+$entry_point.start.min_parse_depth_accept_initial is split into 2 states:
+  $entry_point.start.min_parse_depth_accept_initial
+  $entry_point.start.min_parse_depth_accept_initial.$split_0
+allocated { $byte1 } to {  [ $entry_point.start : inbuf bit[0] ig_intr_md.resubmit_flag; ] }
+allocated { $half } to {  [ ingress::TofinoIngressParser_parse_port_metadata : inbuf bit[160..175] hdr.ethernet/ethernet.etherType; ] }
+allocated { $half } to {  [ ingress::parse_vlan : inbuf bit[16..31] hdr.vlan/vlan.etherType; ] }
+allocated { $byte1 } to {  [ ingress::parse_ipv4.$split_0 : inbuf bit[-56..-49] hdr.ipv4/ipv4.protocol; ] }
+allocated { $byte1 } to {  [ ingress::parse_ipv6.$split_0 : inbuf bit[-96..-89] hdr.ipv6/ipv6.nextHdr; ] }

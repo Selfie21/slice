@@ -1,0 +1,12 @@
+#pipeline pipe
+#stage 0
+^ - - m_meter_0(0,9) : ingress
+#stage 1
+A ^ - m_filter_0(1,10) : ingress
+#stage 2
+- B ^ ipv4_lpm_0(2,11) : ingress
+#dependencies
+A :  IXBAR_READ ANTI_NEXT_TABLE_DATA
+B :  OUTPUT ANTI_NEXT_TABLE_DATA
+
+*** Table dependency chains (of minimum length 8) ***

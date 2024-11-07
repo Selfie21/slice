@@ -1,0 +1,21 @@
+:11-07 16:07:47.886091:    PORT UP asic 0 port 1
+:11-07 16:07:47.886044:    Setting logging fn
+:11-07 16:07:47.886142:    Registering handler for tx
+:11-07 16:07:47.886149:    PORT UP asic 0 port 2
+:11-07 16:07:47.886186:    PORT UP asic 0 port 3
+:11-07 16:07:47.886324:    :-:-:<0,-,0>:Waiting for packets to process
+:11-07 16:07:47.916604:     Updating model log flags: clearing 0xffffffff ffffffff, setting 0x00000000 0000000f
+:11-07 16:07:47.923552:    :-:-:<0,0,0>:Updating p4 log flags: clearing 0xffffffff ffffffff, setting 0x00000000 0000007f
+:11-07 16:07:47.928073:    :-:-:<0,0,0>:Updating tofino log flags: clearing 0xffffffff ffffffff, setting 0x00000000 0000007f
+:11-07 16:07:47.933126:    :-:-:<0,0,0>:Updating packet log flags: clearing 0xffffffff ffffffff, setting 0x00000000 0000007f
+:11-07 16:07:48.349319:    :-:-:<0,0,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 16:07:48.349457:    :-:-:<0,0,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 16:07:48.350891:    :-:-:<0,1,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 16:07:48.351007:    :-:-:<0,1,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 16:07:48.352486:    :-:-:<0,2,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 16:07:48.352744:    :-:-:<0,2,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 16:07:48.353996:    :-:-:<0,3,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 16:07:48.354222:    :-:-:<0,3,->:LearningFilter::clear : Excessive clearing of filter 1 !!! Nothing to clear
+:11-07 21:20:21.069092:    PORT DOWN asic 0 port 3
+:11-07 21:20:21.171574:    PORT DOWN asic 0 port 1
+:11-07 21:20:21.171618:    PORT DOWN asic 0 port 2
