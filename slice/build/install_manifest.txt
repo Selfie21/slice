@@ -1,5 +1,0 @@
-/home/p4/mysde/bf-sde-9.13.3/install/bin/sdepythonpath.py
-/home/p4/mysde/bf-sde-9.13.3/install/share/p4/targets/tofino/meter.conf
-/home/p4/mysde/bf-sde-9.13.3/install/share/tofinopd/meter/pipe/context.json
-/home/p4/mysde/bf-sde-9.13.3/install/share/tofinopd/meter/pipe/tofino.bin
-/home/p4/mysde/bf-sde-9.13.3/install/share/tofinopd/meter/bf-rt.json

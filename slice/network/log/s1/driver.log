@@ -1,158 +1,0 @@
-stty: 'standard input': Inappropriate ioctl for device
-Using SDE /home/p4/mysde/bf-sde-9.13.3
-Using SDE_INSTALL /home/p4/mysde/bf-sde-9.13.3/install
-Setting up DMA Memory Pool
-sudo: unable to resolve host p4-studio: Temporary failure in name resolution
-Using TARGET_CONFIG_FILE /home/p4/mysde/bf-sde-9.13.3/install/share/p4/targets/tofino/meter.conf
-Using SDE_DEPENDENCIES /home/p4/mysde/bf-sde-9.13.3/install
-Using PATH /home/p4/mysde/bf-sde-9.13.3/install/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
-Using LD_LIBRARY_PATH /home/p4/mysde/bf-sde-9.13.3/install/lib:/home/p4/mysde/bf-sde-9.13.3/install/lib::/usr/local/lib
-sudo: unable to resolve host p4-studio: Temporary failure in name resolution
-2024-11-07 21:55:00.854489 BF_SWITCHD DEBUG - bf_switchd: system services initialized
-2024-11-07 21:55:00.854581 BF_SWITCHD DEBUG - bf_switchd: loading conf_file /home/p4/mysde/bf-sde-9.13.3/install/share/p4/targets/tofino/meter.conf...
-2024-11-07 21:55:00.854635 BF_SWITCHD DEBUG - bf_switchd: processing device configuration...
-2024-11-07 21:55:00.854870 BF_SWITCHD DEBUG - Configuration for dev_id 0
-2024-11-07 21:55:00.854944 BF_SWITCHD DEBUG -   Family        : tofino
-2024-11-07 21:55:00.854968 BF_SWITCHD DEBUG -   pci_sysfs_str : /sys/devices/pci0000:00/0000:00:03.0/0000:05:00.0
-2024-11-07 21:55:00.854991 BF_SWITCHD DEBUG -   pci_int_mode  : 0
-2024-11-07 21:55:00.855013 BF_SWITCHD DEBUG -   sds_fw_path   : share/tofino_sds_fw/avago/firmware
-2024-11-07 21:55:00.855036 BF_SWITCHD DEBUG - bf_switchd: processing P4 configuration...
-2024-11-07 21:55:00.855103 BF_SWITCHD DEBUG - coal_mirror_enable=0 coal_min=0 sessions_num=0
-2024-11-07 21:55:00.855136 BF_SWITCHD DEBUG - P4 profile for dev_id 0
-2024-11-07 21:55:00.855159 BF_SWITCHD DEBUG - num P4 programs 1
-2024-11-07 21:55:00.855181 BF_SWITCHD DEBUG -   p4_name: meter
-2024-11-07 21:55:00.855203 BF_SWITCHD DEBUG -   p4_pipeline_name: pipe
-2024-11-07 21:55:00.855226 BF_SWITCHD DEBUG -     libpd: 
-2024-11-07 21:55:00.855249 BF_SWITCHD DEBUG -     libpdthrift: 
-2024-11-07 21:55:00.855271 BF_SWITCHD DEBUG -     context: /home/p4/mysde/bf-sde-9.13.3/install/share/tofinopd/meter/pipe/context.json
-2024-11-07 21:55:00.855294 BF_SWITCHD DEBUG -     config: /home/p4/mysde/bf-sde-9.13.3/install/share/tofinopd/meter/pipe/tofino.bin
-2024-11-07 21:55:00.855316 BF_SWITCHD DEBUG -   Pipes in scope [
-2024-11-07 21:55:00.855338 BF_SWITCHD DEBUG - 0 
-2024-11-07 21:55:00.855369 BF_SWITCHD DEBUG - 1 
-2024-11-07 21:55:00.855391 BF_SWITCHD DEBUG - 2 
-2024-11-07 21:55:00.855413 BF_SWITCHD DEBUG - 3 
-2024-11-07 21:55:00.855435 BF_SWITCHD DEBUG - ]
-2024-11-07 21:55:00.855465 BF_SWITCHD DEBUG -   diag: 
-2024-11-07 21:55:00.855488 BF_SWITCHD DEBUG -   accton diag: 
-2024-11-07 21:55:00.855511 BF_SWITCHD DEBUG -   Agent[0]: /home/p4/mysde/bf-sde-9.13.3/install/lib/libpltfm_mgr.so
-2024-11-07 21:55:00.857294 BF_SWITCHD DEBUG - bf_switch: Operational mode set to default: MODEL
-Starting PD-API RPC server on port 9090
-2024-11-07 21:55:00.876833 BF_SWITCHD DEBUG - bf_switchd: drivers initialized
-2024-11-07 21:55:00.876919 BF_SWITCHD DEBUG - bf_switchd: initializing dru_sim service
-2024-11-07 21:55:00.877402 BF_SWITCHD DEBUG - bf_switchd: library libdru_sim.so loaded
-INFO: DRU sim MTI initialized successfully
-dru_sim: client socket created
-dru_sim: connected on port 8001
-dru_sim: listen socket created
-dru_sim: bind done on port 8002, listening...
-dru_sim: waiting for incoming connections...
-dru_sim: connection accepted on port 8002
-dru_sim: DRU simulator running
-Setting core_pll_ctrl0=cd44cbfe
-/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\2024-11-07 21:55:11.639692 BF_SWITCHD DEBUG - bf_switchd: dev_id 0 initialized
-2024-11-07 21:55:11.639705 BF_SWITCHD DEBUG - bf_switchd: initialized 1 devices
-2024-11-07 21:55:11.639718 BF_SWITCHD DEBUG - bf_switchd: spawning cli server thread
-2024-11-07 21:55:11.639889 BF_SWITCHD DEBUG - bf_switchd: running in background; driver shell is disabled
-2024-11-07 21:55:11.639920 BF_SWITCHD DEBUG - bf_switchd: server started - listening on port 9999
-2024-11-07 21:55:23.085057 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 21:55:23.085182 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:55:23.147168 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 21:55:23.147237 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:55:23.148906 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 21:55:23.149098 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:56:27.291145 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 21:56:27.291517 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:56:27.293137 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 21:56:27.293255 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:56:27.294791 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 21:56:27.294841 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:57:06.345006 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 21:57:06.345473 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:57:06.347187 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 21:57:06.347228 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 21:57:06.348792 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 21:57:06.348828 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:06:59.115997 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:06:59.116057 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:06:59.117895 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:06:59.117932 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:06:59.119253 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:06:59.119289 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:07:08.464122 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:07:08.464228 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:07:08.466072 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:07:08.466108 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:07:08.467844 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:07:08.468069 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:15:45.287970 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:15:45.288109 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:15:45.290335 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:15:45.290393 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:15:45.291794 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:15:45.291834 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:16:07.075882 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:16:07.075988 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:16:07.077470 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:16:07.077516 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:16:07.078882 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:16:07.078974 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:17:49.610838 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:17:49.610919 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:17:49.611994 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:17:49.612033 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:17:49.613297 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:17:49.613334 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:19:54.460718 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:19:54.461085 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:19:54.462872 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:19:54.463065 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:19:54.464589 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:19:54.464768 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:24:07.978337 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:24:07.978401 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:24:07.980234 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:24:07.980270 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:24:07.981471 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:24:07.981510 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:26:19.401859 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:26:19.402189 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:26:19.403711 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:26:19.403755 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:26:19.405245 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:26:19.405552 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:26:37.552685 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:26:37.553124 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:26:37.554331 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:26:37.554453 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:26:37.555735 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:26:37.555779 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:11.685456 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:28:11.685906 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:11.688228 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:28:11.688397 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:11.689744 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:28:11.689919 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:32.400768 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:28:32.401249 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:32.402519 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:28:32.402560 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:32.404165 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:28:32.404309 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:54.693461 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:28:54.693542 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:54.695046 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:28:54.695081 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:28:54.696834 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:28:54.696872 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:29:19.381969 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:29:19.382044 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:29:19.383770 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:29:19.383807 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:29:19.385144 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:29:19.385174 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:30:14.352461 BF_BFRT ERROR - tableUsageGet:701 pipe.Ingress.meter Not supported
-2024-11-07 22:30:14.352579 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:30:14.355961 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.egress_trigger Not supported
-2024-11-07 22:30:14.356062 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported
-2024-11-07 22:30:14.359306 BF_BFRT ERROR - tableUsageGet:701 pipe.snapshot.ingress_trigger Not supported
-2024-11-07 22:30:14.359407 BF_BFRT ERROR - BF_RT_SERVER:read_usage:2750 Unable to get usage Operation not supported

@@ -1,56 +1,0 @@
-stty: 'standard input': Inappropriate ioctl for device
-Using SDE /home/p4/mysde/bf-sde-9.13.3
-Using SDE_INSTALL /home/p4/mysde/bf-sde-9.13.3/install
-Setting up DMA Memory Pool
-sudo: unable to resolve host p4-studio: Temporary failure in name resolution
-Using TARGET_CONFIG_FILE /home/p4/mysde/bf-sde-9.13.3/install/share/p4/targets/tofino/meter.conf
-Using SDE_DEPENDENCIES /home/p4/mysde/bf-sde-9.13.3/install
-Using PATH /home/p4/mysde/bf-sde-9.13.3/install/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
-Using LD_LIBRARY_PATH /home/p4/mysde/bf-sde-9.13.3/install/lib:/home/p4/mysde/bf-sde-9.13.3/install/lib::/usr/local/lib
-sudo: unable to resolve host p4-studio: Temporary failure in name resolution
-2024-11-07 21:55:00.846038 BF_SWITCHD DEBUG - bf_switchd: system services initialized
-2024-11-07 21:55:00.848196 BF_SWITCHD DEBUG - bf_switchd: loading conf_file /home/p4/mysde/bf-sde-9.13.3/install/share/p4/targets/tofino/meter.conf...
-2024-11-07 21:55:00.848284 BF_SWITCHD DEBUG - bf_switchd: processing device configuration...
-2024-11-07 21:55:00.848383 BF_SWITCHD DEBUG - Configuration for dev_id 0
-2024-11-07 21:55:00.848420 BF_SWITCHD DEBUG -   Family        : tofino
-2024-11-07 21:55:00.848446 BF_SWITCHD DEBUG -   pci_sysfs_str : /sys/devices/pci0000:00/0000:00:03.0/0000:05:00.0
-2024-11-07 21:55:00.848470 BF_SWITCHD DEBUG -   pci_int_mode  : 0
-2024-11-07 21:55:00.848493 BF_SWITCHD DEBUG -   sds_fw_path   : share/tofino_sds_fw/avago/firmware
-2024-11-07 21:55:00.848517 BF_SWITCHD DEBUG - bf_switchd: processing P4 configuration...
-2024-11-07 21:55:00.848584 BF_SWITCHD DEBUG - coal_mirror_enable=0 coal_min=0 sessions_num=0
-2024-11-07 21:55:00.848636 BF_SWITCHD DEBUG - P4 profile for dev_id 0
-2024-11-07 21:55:00.848661 BF_SWITCHD DEBUG - num P4 programs 1
-2024-11-07 21:55:00.848719 BF_SWITCHD DEBUG -   p4_name: meter
-2024-11-07 21:55:00.848746 BF_SWITCHD DEBUG -   p4_pipeline_name: pipe
-2024-11-07 21:55:00.848769 BF_SWITCHD DEBUG -     libpd: 
-2024-11-07 21:55:00.848797 BF_SWITCHD DEBUG -     libpdthrift: 
-2024-11-07 21:55:00.848820 BF_SWITCHD DEBUG -     context: /home/p4/mysde/bf-sde-9.13.3/install/share/tofinopd/meter/pipe/context.json
-2024-11-07 21:55:00.848843 BF_SWITCHD DEBUG -     config: /home/p4/mysde/bf-sde-9.13.3/install/share/tofinopd/meter/pipe/tofino.bin
-2024-11-07 21:55:00.848867 BF_SWITCHD DEBUG -   Pipes in scope [
-2024-11-07 21:55:00.848890 BF_SWITCHD DEBUG - 0 
-2024-11-07 21:55:00.848924 BF_SWITCHD DEBUG - 1 
-2024-11-07 21:55:00.848948 BF_SWITCHD DEBUG - 2 
-2024-11-07 21:55:00.848970 BF_SWITCHD DEBUG - 3 
-2024-11-07 21:55:00.848993 BF_SWITCHD DEBUG - ]
-2024-11-07 21:55:00.849024 BF_SWITCHD DEBUG -   diag: 
-2024-11-07 21:55:00.849047 BF_SWITCHD DEBUG -   accton diag: 
-2024-11-07 21:55:00.849071 BF_SWITCHD DEBUG -   Agent[0]: /home/p4/mysde/bf-sde-9.13.3/install/lib/libpltfm_mgr.so
-2024-11-07 21:55:00.851020 BF_SWITCHD DEBUG - bf_switch: Operational mode set to default: MODEL
-Starting PD-API RPC server on port 9090
-2024-11-07 21:55:00.868986 BF_SWITCHD DEBUG - bf_switchd: drivers initialized
-2024-11-07 21:55:00.869057 BF_SWITCHD DEBUG - bf_switchd: initializing dru_sim service
-2024-11-07 21:55:00.869594 BF_SWITCHD DEBUG - bf_switchd: library libdru_sim.so loaded
-INFO: DRU sim MTI initialized successfully
-dru_sim: client socket created
-dru_sim: connected on port 8001
-dru_sim: listen socket created
-dru_sim: bind done on port 8002, listening...
-dru_sim: waiting for incoming connections...
-dru_sim: connection accepted on port 8002
-dru_sim: DRU simulator running
-Setting core_pll_ctrl0=cd44cbfe
-/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\2024-11-07 21:55:12.500982 BF_SWITCHD DEBUG - bf_switchd: dev_id 0 initialized
-2024-11-07 21:55:12.500997 BF_SWITCHD DEBUG - bf_switchd: initialized 1 devices
-2024-11-07 21:55:12.501010 BF_SWITCHD DEBUG - bf_switchd: spawning cli server thread
-2024-11-07 21:55:12.501349 BF_SWITCHD DEBUG - bf_switchd: running in background; driver shell is disabled
-2024-11-07 21:55:12.501365 BF_SWITCHD DEBUG - bf_switchd: server started - listening on port 9999

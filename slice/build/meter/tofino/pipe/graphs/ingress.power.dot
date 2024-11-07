@@ -1,9 +1,0 @@
-digraph ingress {
-0 [label="$root" shape=box color="black"];
-3 [label="ipv4_lpm_0" shape=box color="black"];
-2 [label="m_filter_0" shape=box color="black"];
-1 [label="m_meter_0" shape=box color="black"];
-0-> 1 [label="$start" color="black"];
-2-> 3 [label="drop" color="black"];
-1-> 2 [label="m_update" color="black"];
-}
