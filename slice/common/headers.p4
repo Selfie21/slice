@@ -19,6 +19,7 @@ const iptype_t IP_PROTO_UDP = 17;
 
 #define CONST_MAX_PORTS 32
 #define CONST_MAX_LABELS 64
+#define PACKET_GEN_PORT 68
 
 /*************************************************************************
 *********************** H E A D E R S  ***********************************
@@ -144,6 +145,11 @@ header gre_t {
 
 
 struct header_t {
+  // pktgen headers
+  pktgen_timer_header_t timer;
+  pktgen_port_down_header_t port_down;
+  pktgen_recirc_header_t recirc;
+  // normal header
   ethernet_t ethernet;
   vlan_t vlan;
   ipv4_t ipv4;

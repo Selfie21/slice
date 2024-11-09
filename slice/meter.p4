@@ -4,14 +4,20 @@
 #include "common/headers.p4"
 #include "common/utils.p4"
 
+
 struct digest_t {
-    bit<8> meterTag;
+  bit<8> meterTag;
+}
+
+struct pvs_pgen_key_t {
+  bit<3> pad;
+  bit<2> pipe_id;
+  bit<3> app_id;
 }
 
 struct metadata_t {
-    digest_t tmp_digest;
+  digest_t tmp_digest;
 }
-
 
 /*************************************************************************
 **************  I N G R E S S   P R O C E S S I N G   *******************
@@ -19,13 +25,23 @@ struct metadata_t {
 
 /***********************  P A R S E R  **************************/
 parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
-                     out ingress_intrinsic_metadata_t ig_intr_md) {
+              out ingress_intrinsic_metadata_t ig_intr_md) {
 
   // Resubmit package and intrinsic metadata
   TofinoIngressParser() tofino_parser;
 
   state start {
     tofino_parser.apply(pkt, ig_intr_md);
+    transition select(ig_intr_md.ingress_port) {
+    PACKET_GEN_PORT:
+      parse_pktgen_timer;
+    default:
+      parse_ethernet;
+    }
+  }
+
+  state parse_pktgen_timer {
+    pkt.extract(hdr.timer);
     transition parse_ethernet;
   }
 
@@ -94,39 +110,35 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
                 in ingress_intrinsic_metadata_from_parser_t ig_prsr_md,
                 inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
                 inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
-  
+
   Meter<bit<8>>(256, MeterType_t.PACKETS) meter;
 
   action drop() { ig_dprsr_md.drop_ctl = 1; }
 
   // Meter
   action m_update(bit<8> meterIndex) {
-      meta.tmp_digest.meterTag = meter.execute(meterIndex);
-      ig_dprsr_md.digest_type = 1;
+    meta.tmp_digest.meterTag = meter.execute(meterIndex);
+    ig_dprsr_md.digest_type = 1;
   }
 
   table m_meter {
-      key = {
-          hdr.ipv4.srcAddr: exact;
-      }
-      actions = {
-          m_update;
-          NoAction;
-      }
-      default_action = NoAction;
-      size = 256;
+    key = { hdr.ipv4.srcAddr : exact;
+    }
+    actions = { m_update;
+    NoAction;
+  }
+  default_action = NoAction;
+  size = 256;
   }
 
   table m_filter {
-      key = {
-          meta.tmp_digest.meterTag: exact;
-      }
-      actions = {
-          drop;
-          NoAction;
-      }
-      default_action = NoAction;
-      size = 8;
+    key = { meta.tmp_digest.meterTag : exact;
+  }
+  actions = { drop;
+  NoAction;
+  }
+  default_action = NoAction;
+  size = 8;
   }
 
   // IP Forward
@@ -138,14 +150,14 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
   }
 
   table ipv4_lpm {
-    key = { hdr.ipv4.dstAddr : lpm;}
-    actions = {
-      ipv4_forward;
-      drop;
-      NoAction;
-    }
-    size = 4096;
-    default_action = NoAction();
+    key = { hdr.ipv4.dstAddr : lpm;
+  }
+  actions = { ipv4_forward;
+  drop;
+  NoAction;
+  }
+  size = 4096;
+  default_action = NoAction();
   }
 
   apply {
@@ -164,12 +176,11 @@ control IngressDeparser(packet_out pkt, inout header_t hdr, in metadata_t meta,
                 in ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md) {
   Checksum() ipv4_checksum;
   Digest<digest_t>() digest_inst;
-  
 
   apply {
-  
+
     if (ig_dprsr_md.digest_type == 1) {
-        digest_inst.pack({meta.tmp_digest.meterTag});
+      digest_inst.pack({meta.tmp_digest.meterTag});
     }
 
     hdr.ipv4.hdrChecksum = ipv4_checksum.update(
