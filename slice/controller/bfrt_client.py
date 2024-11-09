@@ -50,6 +50,7 @@ class Client:
             )
             self.target = gc.Target(device_id=device_id, pipe_id=0xFFFF)
             self.bfrt_info = self.interface.bfrt_info_get()
+            self.gc = gc
             logger.info(f"The target runs the program {self.bfrt_info.p4_name_get()}")
             self.interface.bind_pipeline_config(self.bfrt_info.p4_name_get())
             logger.info(f"Connected to BF Runtime Server as client {client_id}")
@@ -120,7 +121,7 @@ class Client:
 
     def dump_table(self, table):
         logger.info(f"Dumping Table: {table.info.name_get()}")
-        resp = table.entry_get(self.target, [], {"from_hw": False})
+        resp = table.entry_get(self.target, [], {"from_hw": FROM_HW})
         for data, key in resp:
             key_dict = key.to_dict()
             data_dict = data.to_dict()
@@ -128,13 +129,9 @@ class Client:
             pprint(data_dict)
             print()
 
-    def dump_entry(self, table, key_names, key_values):
-        table = self._get_table(table)
-        tmp = []
-        for name, value in zip(key_names, key_values):
-            tmp.append(gc.KeyTuple(name, value))
-        key = table.make_key(tmp)
-        resp = table.entry_get(self.target, [key], {"from_hw": False})
+    def dump_entry(self, table, key):
+        key = table.make_key([key])
+        resp = table.entry_get(self.target, [key], {"from_hw": FROM_HW})
         for data, _ in resp:
             data_dict = data.to_dict()
             pprint(data_dict)
