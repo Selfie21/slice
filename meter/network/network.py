@@ -13,7 +13,7 @@ net.setCompiler(compilerClass=BF_P4C, sde=SDE, sde_install=SDE_INSTALL)
 # Network definition
 net.addTofino("s1", sde=SDE, sde_install=SDE_INSTALL)
 net.addTofino("s2", sde=SDE, sde_install=SDE_INSTALL)
-net.setP4SourceAll("../meter.p4")
+net.setP4SourceAll("../slice.p4")
 
 net.addHost("h11")
 net.addHost("h12")
