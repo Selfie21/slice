@@ -78,6 +78,30 @@ class Client:
                 data.append([table_name, table_type, table_usage, table_size])
         print(tabulate(data, headers=["Full Table Name", "Type", "Usage", "Capacity"]))
 
+    
+    def get_port_info(self):
+        keys = []
+        port_data = []
+        logger.info("Ports that are enabled:")
+        
+        port_table = self._get_table("$PORT")
+        resp = port_table.entry_get(self.target, [], {"from_hw": FROM_HW})
+        for data, key in resp:
+            key_dict = key.to_dict()
+            data_dict = data.to_dict()
+            if data_dict["$PORT_ENABLE"]:
+                keys.append(key)
+                port_data.append([key_dict, data_dict["$PORT_NAME"], data_dict["$PORT_ENABLE"],data_dict["$PORT_UP"], data_dict["$SPEED"]])
+        port_stat_table = self._get_table("$PORT_STAT")
+        resp = port_stat_table.entry_get(self.target, keys, {"from_hw": FROM_HW})
+        for index, (data, _) in enumerate(resp):
+            data_dict = data.to_dict()
+            port_data[index] += [data_dict["$FramesReceivedAll"], data_dict["$FramesTransmittedAll"]]
+        print(tabulate(port_data, headers=["Key", "Name", "Enabled", "Up", "Speed", "Received", "Transmitted"]))
+                
+
+
+
     def _get_table(self, table_name):
         return self.bfrt_info.table_get(table_name)
 
@@ -184,7 +208,7 @@ class Client:
                 data_dict = item.to_dict()
                 pprint(data_dict)
         except RuntimeError:
-            logger.exception("No digest message received this cycle!")
+            logger.info("No digest message received this cycle!")
 
     def generate_packets(self, packet, interval_nanoseconds=1000000000):
         logger.info("Configuring packet gen tables to generate Packets")

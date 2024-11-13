@@ -1,5 +1,5 @@
 import sys
-from bfrt_client import Client
+from controller.controller import Client
 from loguru import logger
 from scapy.all import Ether, Dot1Q, IP, UDP, TCP
 from util import ip2int
