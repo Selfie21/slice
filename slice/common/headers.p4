@@ -156,6 +156,7 @@ struct header_t {
   ipv6_t ipv6;
   tcp_t tcp;
   udp_t udp;
+  icmp_h icmp;
 }
 
 struct empty_header_t {

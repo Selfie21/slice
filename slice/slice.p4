@@ -76,6 +76,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
       parse_tcp;
     IP_PROTO_UDP:
       parse_udp;
+    IP_PROTO_ICMP:
+      parse_icmp;
     default:
       accept;
     }
@@ -88,6 +90,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
       parse_tcp;
     IP_PROTO_UDP:
       parse_udp;
+    IP_PROTO_ICMP:
+      parse_icmp;
     default:
       accept;
     }
@@ -102,6 +106,12 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
     pkt.extract(hdr.udp);
     transition accept;
   }
+
+  state parse_icmp {
+    pkt.extract(hdr.icmp);
+    transition accept;
+  }
+
 }
 
 /***************** M A T C H - A C T I O N  *********************/
@@ -160,12 +170,28 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
   default_action = NoAction();
   }
 
+  action ipv6_forward(macaddr_t dstAddr, egress_spec_t port) {
+    ig_tm_md.ucast_egress_port = port;
+    hdr.ethernet.srcAddr = hdr.ethernet.dstAddr;
+    hdr.ethernet.dstAddr = dstAddr;
+    hdr.ipv6.hopLimit = hdr.ipv6.hopLimit - 1;
+  }
+
+  table ipv6_lpm {
+      key = { hdr.ipv6.dstAddr : lpm; }
+      actions = { ipv6_forward; drop; NoAction; }
+      size = 4096;
+      default_action = NoAction();
+  }
+
   apply {
     m_meter.apply();
     m_filter.apply();
 
     if (hdr.ipv4.isValid()) {
       ipv4_lpm.apply();
+    }else if (hdr.ipv6.isValid()) {
+      ipv6_lpm.apply();
     }
   }
 }
