@@ -16,8 +16,11 @@ sys.path.append(os.path.join(SDE_PYTHON3, "tofino", "bfrt_grpc"))
 import bfrt_grpc.client as gc
 from bfrt_grpc.client import BfruntimeReadWriteRpcException
 
-NUM_TRIES = 3
+RETRY_ATTEMPTS = 3
+DEFAULT_GRPC_ADDRESS = "localhost:50052"
 FROM_HW = False
+PKT_GEN_PORT = 68
+
 PARAM_NAME = {
     "bytes": [
         "$METER_SPEC_CIR_KBPS",
@@ -36,9 +39,9 @@ PARAM_NAME = {
 
 class Client:
     # Wrapper to a grpc client connected to the BF Runtime
-    PKT_GEN_PORT = 68
 
-    def __init__(self, grpc_addr="localhost:50052", device_id=0):
+
+    def __init__(self, grpc_addr=DEFAULT_GRPC_ADDRESS, device_id=0):
         # Add custom bfrt required packages to python path so they are usable
         client_id = 0
         try:
@@ -46,7 +49,7 @@ class Client:
                 grpc_addr=grpc_addr,
                 client_id=client_id,
                 device_id=device_id,
-                num_tries=NUM_TRIES,
+                num_tries=RETRY_ATTEMPTS,
             )
             self.target = gc.Target(device_id=device_id, pipe_id=0xFFFF)
             self.bfrt_info = self.interface.bfrt_info_get()
@@ -58,6 +61,9 @@ class Client:
             logger.exception(f"Could not connect to BF Runtime server - exiting")
             self.interface = None
             sys.exit(1)
+
+    def get_table(self, table_name):
+        return self.bfrt_info.table_get(table_name)
 
     def get_base_info(self):
         logger.info("Getting base info of tables")
@@ -80,30 +86,26 @@ class Client:
 
     
     def get_port_info(self):
-        keys = []
+        keys_enabled = []
         port_data = []
         logger.info("Ports that are enabled:")
         
-        port_table = self._get_table("$PORT")
+        port_table = self.get_table("$PORT")
         resp = port_table.entry_get(self.target, [], {"from_hw": FROM_HW})
         for data, key in resp:
             key_dict = key.to_dict()
             data_dict = data.to_dict()
             if data_dict["$PORT_ENABLE"]:
-                keys.append(key)
+                keys_enabled.append(key)
                 port_data.append([key_dict, data_dict["$PORT_NAME"], data_dict["$PORT_ENABLE"],data_dict["$PORT_UP"], data_dict["$SPEED"]])
-        port_stat_table = self._get_table("$PORT_STAT")
-        resp = port_stat_table.entry_get(self.target, keys, {"from_hw": FROM_HW})
+        
+        port_stat_table = self.get_table("$PORT_STAT")
+        resp = port_stat_table.entry_get(self.target, keys_enabled, {"from_hw": FROM_HW})
         for index, (data, _) in enumerate(resp):
             data_dict = data.to_dict()
             port_data[index] += [data_dict["$FramesReceivedAll"], data_dict["$FramesTransmittedAll"]]
-        print(tabulate(port_data, headers=["Key", "Name", "Enabled", "Up", "Speed", "Received", "Transmitted"]))
-                
+        print(tabulate(port_data, headers=["Key", "Name", "Enabled", "Up", "Speed", "FramesReceived", "FramesTransmitted"]))
 
-
-
-    def _get_table(self, table_name):
-        return self.bfrt_info.table_get(table_name)
 
     def info_table(self, table):
         logger.info(f"Getting Information on Table: {table.info.name_get()}")
@@ -212,9 +214,9 @@ class Client:
 
     def generate_packets(self, packet, interval_nanoseconds=1000000000):
         logger.info("Configuring packet gen tables to generate Packets")
-        pktgen_port = self._get_table("tf1.pktgen.port_cfg")
-        pktgen_buffer = self._get_table("tf1.pktgen.pkt_buffer")
-        pktgen_app = self._get_table("tf1.pktgen.app_cfg")
+        pktgen_port = self.get_table("tf1.pktgen.port_cfg")
+        pktgen_buffer = self.get_table("tf1.pktgen.pkt_buffer")
+        pktgen_app = self.get_table("tf1.pktgen.app_cfg")
 
         logger.info(f"Sending out packets with length: {len(packet)}")
         pktgen_port_key = pktgen_port.make_key(
