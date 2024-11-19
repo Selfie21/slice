@@ -16,6 +16,9 @@ struct pvs_pgen_key_t {
 }
 
 struct metadata_t {
+  bit<16> srcPort;
+  bit<16> dstPort;
+  slice_id_t slice_id;
   digest_t tmp_digest;
 }
 
@@ -99,11 +102,15 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
 
   state parse_tcp {
     pkt.extract(hdr.tcp);
+    meta.srcPort = hdr.tcp.srcPort;
+    meta.dstPort = hdr.tcp.dstPort;
     transition accept;
   }
 
   state parse_udp {
     pkt.extract(hdr.udp);
+    meta.srcPort = hdr.udp.srcPort;
+    meta.dstPort = hdr.udp.dstPort;
     transition accept;
   }
 
@@ -184,14 +191,41 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
       default_action = NoAction();
   }
 
-  apply {
-    m_meter.apply();
-    m_filter.apply();
+  action set_sliceid(slice_id_t slice_id) {
+    meta.slice_id = slice_id;
+    //TODO: write MPLS Header
+  }
 
-    if (hdr.ipv4.isValid()) {
-      ipv4_lpm.apply();
-    }else if (hdr.ipv6.isValid()) {
-      ipv6_lpm.apply();
+  // Slice
+  table flow_ident {
+    key = {
+      hdr.ipv4.dstAddr: exact,
+      hdr.ipv4.srcAddr: exact,
+      hdr.ipv4.protocol: exact,
+      meta.srcPort: exact,
+      meta.dstPort: exact
+    }
+    actions = { 
+      set_flowid;
+      drop;
+      NoAction;
+    }
+    size = 256;
+    default_action = drop();
+  }
+
+  
+  apply {
+    // We only process packets, identifiable in a slice
+    if(slice_ident.apply()){
+      m_meter.apply();
+      m_filter.apply();
+
+      if (hdr.ipv4.isValid()) {
+        ipv4_lpm.apply();
+      }else if (hdr.ipv6.isValid()) {
+        ipv6_lpm.apply();
+      }
     }
   }
 }

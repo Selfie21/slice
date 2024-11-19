@@ -6,6 +6,7 @@ typedef bit<12> vlanid_t;
 typedef bit<32> ip4addr_t;
 typedef bit<128> ipv6_addr_t;
 typedef bit<9> egress_spec_t;
+typedef bit<8> slice_id_t;
 
 typedef bit<16> ethertype_t;
 const ethertype_t TYPE_IPV4 = 0x800;
