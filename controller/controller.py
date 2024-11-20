@@ -156,7 +156,6 @@ class Client:
             print()
 
     def dump_entry(self, table, key):
-        key = table.make_key([key])
         resp = table.entry_get(self.target, [key], {"from_hw": FROM_HW})
         for data, _ in resp:
             data_dict = data.to_dict()
@@ -186,8 +185,8 @@ class Client:
         )
         try:
             meter.entry_add(self.target, [key], [data])
-            logger.info("Succesfully programmed meter with the following information: ")
-            self.dump_table(table=meter, key_name="$METER_INDEX", key_value=meter_index)
+            logger.info(f"Succesfully programmed meter index {meter_index} with the following information: ")
+            self.dump_entry(table=meter, key=key)
         except Exception:
             logger.exception(f"Unable to program meter!")
 

@@ -6,9 +6,11 @@
 #include "common/utils.p4"
 
 #define MAX_SLICES 256
-#define MAX_PORTS 32
-#define MAX_LABELS 64
+#define CONST_MAX_PORTS = 32
 #define PACKET_GEN_PORT 68
+#define CONST_PCP 5
+#define CONST_DEI 0
+
 
 struct digest_t {
   bit<8> meter_tag;
@@ -56,14 +58,14 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
   state parse_ethernet {
     pkt.extract(hdr.ethernet);
     transition select(hdr.ethernet.ether_type) {
-    TYPE_VLAN:
-      parse_vlan;
-    TYPE_IPV4:
-      parse_ipv4;
-    TYPE_IPV6:
-      parse_ipv6;
+      TYPE_VLAN:
+        parse_vlan;
+      TYPE_IPV4:
+        parse_ipv4;
+      TYPE_IPV6:
+        parse_ipv6;
       default:
-        accept;
+          accept;
     }
   }
 
@@ -72,8 +74,10 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
     transition select(hdr.vlan.ether_type) {
     TYPE_IPV4:
       parse_ipv4;
-      default:
-        accept;
+    TYPE_IPV6:
+      parse_ipv6;
+    default:
+      accept;
     }
   }
 
@@ -131,13 +135,23 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
                 in ingress_intrinsic_metadata_from_parser_t ig_prsr_md,
                 inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
                 inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
+
   Meter<bit<8>>(MAX_SLICES, MeterType_t.PACKETS) meter;
   action drop() { ig_dprsr_md.drop_ctl = 1; }
 
   // Slice
   action set_sliceid(slice_id_t slice_id) {
     meta.slice_id = slice_id;
-    // TODO: write MPLS Header
+
+    // Set VLAN Header
+    //hdr.vlan.setValid();
+    //hdr.vlan.pcp = CONST_PCP;
+    //hdr.vlan.dei = CONST_DEI;
+    //hdr.vlan.vid = (bit<12>) slice_id;
+    //preserve original ethertype
+    //hdr.vlan.ether_type = hdr.ethernet.ether_type;
+    //hdr.ethernet.ether_type = TYPE_VLAN;
+
   }
 
   table slice_ident {
@@ -208,18 +222,19 @@ size = 4096;
 default_action = NoAction();
 }
 
+
 apply {
-  // We only process packets, identifiable in a slice
+  // We only process packets, identifiable in a slice. Others get dropped
   if (slice_ident.apply().hit) {
     // Update Meter and Apply meter filtering
     m_update(meta.slice_id);
-    m_filter.apply();
-
+    m_filter.apply(); 
     if (hdr.ipv4.isValid()) {
       ipv4_lpm.apply();
     } else if (hdr.ipv6.isValid()) {
       ipv6_lpm.apply();
     }
+
   }
 }
 }

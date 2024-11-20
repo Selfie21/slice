@@ -31,6 +31,7 @@ p = (
     / UDP(dport=443, sport=sport)
 )
 #client.generate_packets(packet=p, interval_nanoseconds=100000000)
-
+meter = client.get_table("Ingress.meter")
+client.program_meter(meter=meter, meter_index=1, meter_type="packets", cir=10, cbs=20, pir=10, pbs=40)
 base_model = client.bfrt_info.learn_get("digest_inst")
 client.loop_digest(base_model)

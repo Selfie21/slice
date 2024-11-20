@@ -35,7 +35,7 @@ header vlan_t {
   ethertype_t ether_type;
 }
 
-header mpls_h {
+header mpls_t {
   bit<20> label;
   bit<3> exp;
   bit<1> bos;
