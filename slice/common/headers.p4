@@ -18,25 +18,21 @@ const iptype_t IP_PROTO_ICMP = 1;
 const iptype_t IP_PROTO_TCP = 6;
 const iptype_t IP_PROTO_UDP = 17;
 
-#define CONST_MAX_PORTS 32
-#define CONST_MAX_LABELS 64
-#define PACKET_GEN_PORT 68
-
 /*************************************************************************
 *********************** H E A D E R S  ***********************************
 *************************************************************************/
 
 header ethernet_t {
-  macaddr_t dstAddr;
-  macaddr_t srcAddr;
-  ethertype_t etherType;
+  macaddr_t dst_addr;
+  macaddr_t src_addr;
+  ethertype_t ether_type;
 }
 
 header vlan_t {
   bit<3> pcp;
   bit<1> dei;
   vlanid_t vid;
-  ethertype_t etherType;
+  ethertype_t ether_type;
 }
 
 header mpls_h {
@@ -51,35 +47,35 @@ header ipv4_t {
   bit<4> ihl;
   bit<6> diffserv;
   bit<2> ecn;
-  bit<16> totalLen;
+  bit<16> total_len;
   bit<16> identification;
   bit<3> flags;
-  bit<13> fragOffset;
+  bit<13> frag_offset;
   bit<8> ttl;
   bit<8> protocol;
-  bit<16> hdrChecksum;
-  ip4addr_t srcAddr;
-  ip4addr_t dstAddr;
+  bit<16> hdr_checksum;
+  ip4addr_t src_addr;
+  ip4addr_t dst_addr;
 }
 
 header ipv6_t {
   bit<4> version;
   bit<6> diffserv;
   bit<2> ecn;
-  bit<20> flowLabel;
-  bit<16> PayloadLen;
-  bit<8> nextHdr;
-  bit<8> hopLimit;
-  ipv6_addr_t srcAddr;
-  ipv6_addr_t dstAddr;
+  bit<20> flow_label;
+  bit<16> payload_len;
+  bit<8> next_hdr;
+  bit<8> hop_limit;
+  ipv6_addr_t src_addr;
+  ipv6_addr_t dst_addr;
 }
 
 header tcp_t {
-  bit<16> srcPort;
-  bit<16> dstPort;
-  bit<32> seqNo;
-  bit<32> ackNo;
-  bit<4> dataOffset;
+  bit<16> src_port;
+  bit<16> dst_port;
+  bit<32> seq_no;
+  bit<32> ack_no;
+  bit<4> data_offset;
   bit<4> res;
   bit<1> cwr;
   bit<1> ece;
@@ -91,12 +87,12 @@ header tcp_t {
   bit<1> fin;
   bit<16> window;
   bit<16> checksum;
-  bit<16> urgentPtr;
+  bit<16> urgen_ptr;
 }
 
 header udp_t {
-  bit<16> srcPort;
-  bit<16> dstPort;
+  bit<16> src_port;
+  bit<16> dst_port;
   bit<16> len;
   bit<16> checksum;
 }
@@ -108,19 +104,19 @@ header icmp_h {
 }
 
 header arp_t {
-  bit<16> hwType;
-  bit<16> protoType;
-  bit<8> hwAddrLen;
-  bit<8> protoAddrLen;
+  bit<16> hw_type;
+  bit<16> prototype;
+  bit<8> hw_addr_len;
+  bit<8> proto_addr_len;
   bit<16> opcode;
 }
 
 header ipv6_srh_t {
-  bit<8> nextHdr;
-  bit<8> hdrExtLen;
-  bit<8> routingType;
-  bit<8> segLeft;
-  bit<8> lastEntry;
+  bit<8> next_hdr;
+  bit<8> hdr_ext_len;
+  bit<8> routing_type;
+  bit<8> seg_left;
+  bit<8> last_entry;
   bit<8> flags;
   bit<16> tag;
 }
