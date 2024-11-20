@@ -140,7 +140,6 @@ header gre_t {
   bit<16> proto;
 }
 
-
 struct header_t {
   // pktgen headers
   pktgen_timer_header_t timer;

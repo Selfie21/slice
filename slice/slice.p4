@@ -1,6 +1,7 @@
 /* -*- P4_16 -*- */
 #include <core.p4>
 #include <tna.p4>
+
 #include "common/headers.p4"
 #include "common/utils.p4"
 
@@ -34,7 +35,6 @@ struct metadata_t {
 /***********************  P A R S E R  **************************/
 parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
               out ingress_intrinsic_metadata_t ig_intr_md) {
-
   // Resubmit package and intrinsic metadata
   TofinoIngressParser() tofino_parser;
 
@@ -43,8 +43,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
     transition select(ig_intr_md.ingress_port) {
     PACKET_GEN_PORT:
       parse_pktgen_timer;
-    default:
-      parse_ethernet;
+      default:
+        parse_ethernet;
     }
   }
 
@@ -62,8 +62,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
       parse_ipv4;
     TYPE_IPV6:
       parse_ipv6;
-    default:
-      accept;
+      default:
+        accept;
     }
   }
 
@@ -72,8 +72,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
     transition select(hdr.vlan.ether_type) {
     TYPE_IPV4:
       parse_ipv4;
-    default:
-      accept;
+      default:
+        accept;
     }
   }
 
@@ -86,8 +86,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
       parse_udp;
     IP_PROTO_ICMP:
       parse_icmp;
-    default:
-      accept;
+      default:
+        accept;
     }
   }
 
@@ -100,8 +100,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
       parse_udp;
     IP_PROTO_ICMP:
       parse_icmp;
-    default:
-      accept;
+      default:
+        accept;
     }
   }
 
@@ -123,7 +123,6 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
     pkt.extract(hdr.icmp);
     transition accept;
   }
-
 }
 
 /***************** M A T C H - A C T I O N  *********************/
@@ -132,108 +131,108 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
                 in ingress_intrinsic_metadata_from_parser_t ig_prsr_md,
                 inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
                 inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
-
   Meter<bit<8>>(MAX_SLICES, MeterType_t.PACKETS) meter;
   action drop() { ig_dprsr_md.drop_ctl = 1; }
 
   // Slice
- action set_sliceid(slice_id_t slice_id) {
+  action set_sliceid(slice_id_t slice_id) {
     meta.slice_id = slice_id;
-    //TODO: write MPLS Header
+    // TODO: write MPLS Header
   }
-
 
   table slice_ident {
-    key = {
-      hdr.ipv4.dst_addr: exact;
-      hdr.ipv4.src_addr: exact;
-      hdr.ipv4.protocol: exact;
-      meta.src_port: exact;
-      meta.dst_port: exact;
+    key = { hdr.ipv4.dst_addr : exact;
+    hdr.ipv4.src_addr : exact;
+    hdr.ipv4.protocol : exact;
+    meta.src_port : exact;
+    meta.dst_port : exact;
+  }
+  actions = { set_sliceid;
+  drop;
+  NoAction;
+}
+size = MAX_SLICES;
+default_action = drop();
+}
+
+// Meter
+action m_update(slice_id_t meter_index) {
+  meta.meter_tag = meter.execute(meter_index);
+  ig_dprsr_md.digest_type = 1;
+}
+
+table m_filter {
+  key = { meta.meter_tag : exact;
+}
+actions = { drop;
+NoAction;
+}
+default_action = NoAction;
+size = 8;
+}
+
+// IP Forward
+action ipv4_forward(macaddr_t dst_addr, egress_spec_t port) {
+  ig_tm_md.ucast_egress_port = port;
+  hdr.ethernet.src_addr = hdr.ethernet.dst_addr;
+  hdr.ethernet.dst_addr = dst_addr;
+  hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
+}
+
+table ipv4_lpm {
+  key = { hdr.ipv4.dst_addr : lpm;
+}
+actions = { ipv4_forward;
+drop;
+NoAction;
+}
+size = 4096;
+default_action = NoAction();
+}
+
+action ipv6_forward(macaddr_t dst_addr, egress_spec_t port) {
+  ig_tm_md.ucast_egress_port = port;
+  hdr.ethernet.src_addr = hdr.ethernet.dst_addr;
+  hdr.ethernet.dst_addr = dst_addr;
+  hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1;
+}
+
+table ipv6_lpm {
+  key = { hdr.ipv6.dst_addr : lpm;
+}
+actions = { ipv6_forward;
+drop;
+NoAction;
+}
+size = 4096;
+default_action = NoAction();
+}
+
+apply {
+  // We only process packets, identifiable in a slice
+  if (slice_ident.apply().hit) {
+    // Update Meter and Apply meter filtering
+    m_update(meta.slice_id);
+    m_filter.apply();
+
+    if (hdr.ipv4.isValid()) {
+      ipv4_lpm.apply();
+    } else if (hdr.ipv6.isValid()) {
+      ipv6_lpm.apply();
     }
-    actions = { 
-      set_sliceid;
-      drop;
-      NoAction;
-    }
-    size = MAX_SLICES;
-    default_action = drop();
   }
-  
-  // Meter
-  action m_update(slice_id_t meter_index) {
-    meta.meter_tag = meter.execute(meter_index);
-    ig_dprsr_md.digest_type = 1;
-  }
-
-  table m_filter {
-    key = { meta.meter_tag : exact;
-  }
-  actions = { 
-    drop;
-    NoAction;
-  }
-  default_action = NoAction;
-  size = 8;
-  }
-
-  // IP Forward
-  action ipv4_forward(macaddr_t dst_addr, egress_spec_t port) {
-    ig_tm_md.ucast_egress_port = port;
-    hdr.ethernet.src_addr = hdr.ethernet.dst_addr;
-    hdr.ethernet.dst_addr = dst_addr;
-    hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
-  }
-
-  table ipv4_lpm {
-    key = { hdr.ipv4.dst_addr : lpm;
-  }
-    actions = { ipv4_forward;
-    drop;
-    NoAction;
-  }
-    size = 4096;
-    default_action = NoAction();
-  }
-
-  action ipv6_forward(macaddr_t dst_addr, egress_spec_t port) {
-    ig_tm_md.ucast_egress_port = port;
-    hdr.ethernet.src_addr = hdr.ethernet.dst_addr;
-    hdr.ethernet.dst_addr = dst_addr;
-    hdr.ipv6.hop_limit = hdr.ipv6.hop_limit - 1;
-  }
-
-  table ipv6_lpm {
-    key = { hdr.ipv6.dst_addr : lpm; }
-    actions = { ipv6_forward; drop; NoAction; }
-    size = 4096;
-    default_action = NoAction();
-  }  
-  
-  apply {
-    // We only process packets, identifiable in a slice
-    if(slice_ident.apply().hit){
-      m_update()
-      m_filter.apply();
-
-      if (hdr.ipv4.isValid()) {
-        ipv4_lpm.apply();
-      }else if (hdr.ipv6.isValid()) {
-        ipv6_lpm.apply();
-      }
-    }
-  }
+}
 }
 
 /*********************  D E P A R S E R  ************************/
 
 control IngressDeparser(packet_out pkt, inout header_t hdr, in metadata_t meta,
-                in ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md) {
+                        in ingress_intrinsic_metadata_for_deparser_t
+                            ig_dprsr_md) {
   Checksum() ipv4_checksum;
   Digest<digest_t>() digest_inst;
 
   apply {
-
     if (ig_dprsr_md.digest_type == 1) {
       digest_inst.pack({meta.meter_tag, meta.slice_id});
     }
@@ -241,8 +240,8 @@ control IngressDeparser(packet_out pkt, inout header_t hdr, in metadata_t meta,
     hdr.ipv4.hdr_checksum = ipv4_checksum.update(
         {hdr.ipv4.version, hdr.ipv4.ihl, hdr.ipv4.diffserv, hdr.ipv4.ecn,
          hdr.ipv4.total_len, hdr.ipv4.identification, hdr.ipv4.flags,
-         hdr.ipv4.frag_offset, hdr.ipv4.ttl, hdr.ipv4.protocol, hdr.ipv4.src_addr,
-         hdr.ipv4.dst_addr});
+         hdr.ipv4.frag_offset, hdr.ipv4.ttl, hdr.ipv4.protocol,
+         hdr.ipv4.src_addr, hdr.ipv4.dst_addr});
 
     pkt.emit(hdr);
   }
