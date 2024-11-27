@@ -12,7 +12,6 @@
 #define CONST_PCP 5
 #define CONST_DEI 0
 
-
 struct digest_t {
   bit<8> meter_tag;
   slice_id_t slice_id;
@@ -36,7 +35,8 @@ struct metadata_t {
 *************************************************************************/
 
 /***********************  P A R S E R  **************************/
-parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
+parser
+IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
               out ingress_intrinsic_metadata_t ig_intr_md) {
   // Resubmit package and intrinsic metadata
   TofinoIngressParser() tofino_parser;
@@ -59,14 +59,14 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
   state parse_ethernet {
     pkt.extract(hdr.ethernet);
     transition select(hdr.ethernet.ether_type) {
-      TYPE_VLAN:
-        parse_vlan;
-      TYPE_IPV4:
-        parse_ipv4;
-      TYPE_IPV6:
-        parse_ipv6;
+    TYPE_VLAN:
+      parse_vlan;
+    TYPE_IPV4:
+      parse_ipv4;
+    TYPE_IPV6:
+      parse_ipv6;
       default:
-          accept;
+        accept;
     }
   }
 
@@ -77,8 +77,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
       parse_ipv4;
     TYPE_IPV6:
       parse_ipv6;
-    default:
-      accept;
+      default:
+        accept;
     }
   }
 
@@ -136,7 +136,6 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
                 in ingress_intrinsic_metadata_from_parser_t ig_prsr_md,
                 inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
                 inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
-
   Meter<bit<8>>(MAX_SLICES, MeterType_t.PACKETS) meter;
   action drop() { ig_dprsr_md.drop_ctl = 1; }
 
@@ -148,9 +147,9 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
     hdr.vlan.setValid();
     hdr.vlan.pcp = CONST_PCP;
     hdr.vlan.dei = CONST_DEI;
-    hdr.vlan.vlan_id = (bit<12>) slice_id;
+    hdr.vlan.vlan_id = (bit<12>)slice_id;
 
-    //preserve original ether_type
+    // preserve original ether_type
     hdr.vlan.ether_type = hdr.ethernet.ether_type;
     hdr.ethernet.ether_type = TYPE_VLAN;
   }
@@ -241,40 +240,39 @@ default_action = NoAction();
 }
 
 // VLAN
-action is_egress_border(){
-    hdr.ethernet.ether_type = hdr.vlan.ether_type;
-    hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
-    hdr.vlan.setInvalid();
+action is_egress_border() {
+  hdr.ethernet.ether_type = hdr.vlan.ether_type;
+  hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
+  hdr.vlan.setInvalid();
 }
 
 table check_is_egress_border {
-    key = {
-      ig_tm_md.ucast_egress_port: exact;
-    }
-    actions = {
-        NoAction;
-        is_egress_border;
-    }
-    default_action = NoAction;
-    size = CONST_MAX_PORTS;
+  key = { ig_tm_md.ucast_egress_port : exact;
+}
+actions = { NoAction;
+is_egress_border;
+}
+default_action = NoAction;
+size = CONST_MAX_PORTS;
 }
 
 apply {
-  // We only process packets, identifiable in a slice. Or the packet was already tagged. Others get dropped
+  // We only process packets, identifiable in a slice. Or the packet was already
+  // tagged. Others get dropped
   bool valid_packet = false;
-  if (hdr.vlan.isValid()){
+  if (hdr.vlan.isValid()) {
     valid_packet = true;
-    meta.slice_id = (bit<8>) hdr.vlan.vlan_id;
-  }else if (slice_ident.apply().hit) {
+    meta.slice_id = (bit<8>)hdr.vlan.vlan_id;
+  } else if (slice_ident.apply().hit) {
     valid_packet = true;
-  }else{
-      drop();
+  } else {
+    drop();
   }
 
-  if (valid_packet){
+  if (valid_packet) {
     // Update Meter and Apply meter filtering
     m_update(meta.slice_id);
-    m_filter.apply(); 
+    m_filter.apply();
 
     // Routing Decisions
     if (hdr.vlan.isValid()) {
@@ -283,11 +281,11 @@ apply {
       ipv4_lpm.apply();
     } else if (hdr.ipv6.isValid()) {
       ipv6_lpm.apply();
-    }else{
+    } else {
       drop();
     }
 
-    if (hdr.vlan.isValid()){
+    if (hdr.vlan.isValid()) {
       check_is_egress_border.apply();
     }
   }
