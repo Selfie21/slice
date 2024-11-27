@@ -31,7 +31,7 @@ header ethernet_t {
 header vlan_t {
   bit<3> pcp;
   bit<1> dei;
-  vlanid_t vid;
+  vlanid_t vlan_id;
   ethertype_t ether_type;
 }
 

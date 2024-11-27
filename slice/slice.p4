@@ -6,8 +6,9 @@
 #include "common/utils.p4"
 
 #define MAX_SLICES 256
-#define CONST_MAX_PORTS = 32
+#define CONST_MAX_PORTS 32
 #define PACKET_GEN_PORT 68
+#define ROUTE_TABLE_SIZE 4096
 #define CONST_PCP 5
 #define CONST_DEI 0
 
@@ -144,14 +145,14 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
     meta.slice_id = slice_id;
 
     // Set VLAN Header
-    //hdr.vlan.setValid();
-    //hdr.vlan.pcp = CONST_PCP;
-    //hdr.vlan.dei = CONST_DEI;
-    //hdr.vlan.vid = (bit<12>) slice_id;
-    //preserve original ethertype
-    //hdr.vlan.ether_type = hdr.ethernet.ether_type;
-    //hdr.ethernet.ether_type = TYPE_VLAN;
+    hdr.vlan.setValid();
+    hdr.vlan.pcp = CONST_PCP;
+    hdr.vlan.dei = CONST_DEI;
+    hdr.vlan.vlan_id = (bit<12>) slice_id;
 
+    //preserve original ether_type
+    hdr.vlan.ether_type = hdr.ethernet.ether_type;
+    hdr.ethernet.ether_type = TYPE_VLAN;
   }
 
   table slice_ident {
@@ -200,7 +201,7 @@ actions = { ipv4_forward;
 drop;
 NoAction;
 }
-size = 4096;
+size = ROUTE_TABLE_SIZE;
 default_action = NoAction();
 }
 
@@ -218,23 +219,77 @@ actions = { ipv6_forward;
 drop;
 NoAction;
 }
-size = 4096;
+size = ROUTE_TABLE_SIZE;
 default_action = NoAction();
 }
 
+action vlan_forward(macaddr_t dst_addr, egress_spec_t port) {
+  ig_tm_md.ucast_egress_port = port;
+  hdr.ethernet.src_addr = hdr.ethernet.dst_addr;
+  hdr.ethernet.dst_addr = dst_addr;
+}
+
+table vlan_exact {
+  key = { hdr.vlan.vlan_id : exact;
+}
+actions = { vlan_forward;
+drop;
+NoAction;
+}
+size = ROUTE_TABLE_SIZE;
+default_action = NoAction();
+}
+
+// VLAN
+action is_egress_border(){
+    hdr.ethernet.ether_type = hdr.vlan.ether_type;
+    hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
+    hdr.vlan.setInvalid();
+}
+
+table check_is_egress_border {
+    key = {
+      ig_tm_md.ucast_egress_port: exact;
+    }
+    actions = {
+        NoAction;
+        is_egress_border;
+    }
+    default_action = NoAction;
+    size = CONST_MAX_PORTS;
+}
 
 apply {
-  // We only process packets, identifiable in a slice. Others get dropped
-  if (slice_ident.apply().hit) {
+  // We only process packets, identifiable in a slice. Or the packet was already tagged. Others get dropped
+  bool valid_packet = false;
+  if (hdr.vlan.isValid()){
+    valid_packet = true;
+    meta.slice_id = (bit<8>) hdr.vlan.vlan_id;
+  }else if (slice_ident.apply().hit) {
+    valid_packet = true;
+  }else{
+      drop();
+  }
+
+  if (valid_packet){
     // Update Meter and Apply meter filtering
     m_update(meta.slice_id);
     m_filter.apply(); 
-    if (hdr.ipv4.isValid()) {
+
+    // Routing Decisions
+    if (hdr.vlan.isValid()) {
+      vlan_exact.apply();
+    } else if (hdr.ipv4.isValid()) {
       ipv4_lpm.apply();
     } else if (hdr.ipv6.isValid()) {
       ipv6_lpm.apply();
+    }else{
+      drop();
     }
 
+    if (hdr.vlan.isValid()){
+      check_is_egress_border.apply();
+    }
   }
 }
 }
@@ -251,7 +306,6 @@ control IngressDeparser(packet_out pkt, inout header_t hdr, in metadata_t meta,
     if (ig_dprsr_md.digest_type == 1) {
       digest_inst.pack({meta.meter_tag, meta.slice_id});
     }
-
     hdr.ipv4.hdr_checksum = ipv4_checksum.update(
         {hdr.ipv4.version, hdr.ipv4.ihl, hdr.ipv4.diffserv, hdr.ipv4.ecn,
          hdr.ipv4.total_len, hdr.ipv4.identification, hdr.ipv4.flags,
