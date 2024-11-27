@@ -16,8 +16,9 @@ sys.path.append(os.path.join(SDE_PYTHON3, "tofino", "bfrt_grpc"))
 import bfrt_grpc.client as gc
 from bfrt_grpc.client import BfruntimeReadWriteRpcException
 
-RETRY_ATTEMPTS = 3
 DEFAULT_GRPC_ADDRESS = "localhost:50052"
+SLICE_IDENT_TABLE = "Ingress.slice_ident"
+RETRY_ATTEMPTS = 3
 FROM_HW = False
 PKT_GEN_PORT = 68
 
@@ -161,6 +162,25 @@ class Client:
             data_dict = data.to_dict()
             pprint(data_dict)
 
+    def add_slice(self, dst_addr, src_addr, src_port, dst_port, protocol, slice_id):
+        slice_ident_table = self.get_table(SLICE_IDENT_TABLE)
+        slice_ident_key = slice_ident_table.make_key(
+            [
+                gc.KeyTuple("hdr.ipv4.src_addr", src_addr),
+                gc.KeyTuple("hdr.ipv4.dst_addr", dst_addr),
+                gc.KeyTuple("meta.src_port", src_port),
+                gc.KeyTuple("meta.dst_port", dst_port),
+                gc.KeyTuple("hdr.ipv4.protocol", protocol)
+            ]
+        )
+        slice_ident_data = slice_ident_table.make_data([gc.DataTuple("slice_id", slice_id)], "set_sliceid")
+        self.add_entry(slice_ident_table, slice_ident_key, slice_ident_data)
+
+    def _validate_slice_id(slice_id: int):
+        # Check maximum entries possible in slice_ident table
+        max_entries = 256
+        if len()
+
     def add_entry(self, table, key, data):
         try:
             table.entry_add(self.target, [key], [data])
@@ -260,6 +280,3 @@ class Client:
             "trigger_timer_periodic",
         )
         self.add_entry(pktgen_app, pktgen_app_key, pktgen_app_action_data)
-
-
-# TODO: Table for adding slice members

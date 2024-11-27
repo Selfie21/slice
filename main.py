@@ -20,7 +20,6 @@ client.dump_table(ip_table)
 slice_table = client.get_table("Ingress.slice_ident")
 slice_table.info.key_field_annotation_add(field_name="dst_addr", custom_annotation="ipv4")
 slice_table.info.key_field_annotation_add(field_name="src_addr", custom_annotation="ipv4")
-client.dump_table(slice_table)
 
 sport = 1234
 src_mac = "00:00:0a:00:01:0b"
@@ -32,6 +31,13 @@ p = (
 )
 #client.generate_packets(packet=p, interval_nanoseconds=100000000)
 meter = client.get_table("Ingress.meter")
+
 client.program_meter(meter=meter, meter_index=1, meter_type="packets", cir=10, cbs=20, pir=10, pbs=40)
+client.add_slice(src_addr='10.0.1.11', dst_addr='10.0.2.21', src_port=23, dst_port=26, protocol=17, slice_id=1)
+client.add_slice(src_addr='10.0.1.12', dst_addr='10.0.2.22', src_port=23, dst_port=26, protocol=17, slice_id=2)
+
+client.dump_table(slice_table)
+
 base_model = client.bfrt_info.learn_get("digest_inst")
 client.loop_digest(base_model)
+
