@@ -38,6 +38,9 @@ client.add_slice(src_addr='10.0.1.12', dst_addr='10.0.2.22', src_port=23, dst_po
 
 client.dump_table(slice_table)
 
-base_model = client.bfrt_info.learn_get("digest_inst")
-client.loop_digest(base_model)
+client.info_table(meter)
+client.add_egress_entry(3)
+client.add_vlan_route(1, "ff:ff:ff:ff:ff:ff", 1)
+#base_model = client.bfrt_info.learn_get("digest_inst")
+#client.loop_digest(base_model)
 

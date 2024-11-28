@@ -18,6 +18,8 @@ from bfrt_grpc.client import BfruntimeReadWriteRpcException
 
 DEFAULT_GRPC_ADDRESS = "localhost:50052"
 SLICE_IDENT_TABLE = "Ingress.slice_ident"
+EGRESS_TABLE = "Ingress.egress_check"
+VLAN_TABLE = "Ingress.vlan_exact"
 RETRY_ATTEMPTS = 3
 FROM_HW = False
 PKT_GEN_PORT = 68
@@ -158,11 +160,15 @@ class Client:
 
     def dump_entry(self, table, key):
         resp = table.entry_get(self.target, [key], {"from_hw": FROM_HW})
-        for data, _ in resp:
+        for data, key in resp:
+            key_dict = key.to_dict()
             data_dict = data.to_dict()
+            pprint(key_dict)
             pprint(data_dict)
 
     def add_slice(self, dst_addr, src_addr, src_port, dst_port, protocol, slice_id):
+        if not self._valid_slice_id(slice_id):
+            raise InvalidInputException("Invalid Slice ID")
         slice_ident_table = self.get_table(SLICE_IDENT_TABLE)
         slice_ident_key = slice_ident_table.make_key(
             [
@@ -176,10 +182,25 @@ class Client:
         slice_ident_data = slice_ident_table.make_data([gc.DataTuple("slice_id", slice_id)], "set_sliceid")
         self.add_entry(slice_ident_table, slice_ident_key, slice_ident_data)
 
-    def _validate_slice_id(slice_id: int):
-        # Check maximum entries possible in slice_ident table
-        max_entries = 256
-        if len()
+    def _valid_slice_id(self, slice_id):
+        slice_ident = self.get_table(SLICE_IDENT_TABLE)
+        max_slices = slice_ident.info.size_get()
+        return slice_id >= 0 and slice_id < int(max_slices)
+
+    def add_vlan_route(self, vlan_id, dst_addr, port):
+        if not self._valid_slice_id(vlan_id):
+            raise InvalidInputException("Invalid Slice ID")
+        vlan_table = self.get_table(VLAN_TABLE)
+        vlan_table.info.data_field_annotation_add(field_name="dst_addr", custom_annotation="mac", action_name="vlan_forward")
+        vlan_table_key = vlan_table.make_key([gc.KeyTuple("hdr.vlan.vlan_id", vlan_id)])
+        vlan_table_data = vlan_table.make_data([gc.DataTuple("dst_addr", dst_addr), gc.DataTuple("port", port)], "vlan_forward")
+        self.add_entry(vlan_table, vlan_table_key, vlan_table_data)
+
+    def add_egress_entry(self, port):
+        egress_table = self.get_table(EGRESS_TABLE)
+        egress_table_key = egress_table.make_key([gc.KeyTuple("ig_tm_md.ucast_egress_port", port)])
+        egress_table_data = egress_table.make_data([], "is_egress_border")
+        self.add_entry(egress_table, egress_table_key, egress_table_data)
 
     def add_entry(self, table, key, data):
         try:
@@ -190,8 +211,13 @@ class Client:
             )
             table.entry_mod(self.target, [key], [data])
             logger.info("Modified entry succesfully!")
+            logger.info(f"Programmed table sucessfully with the following information:")
+            self.dump_entry(table=table, key=key)
         except Exception:
             logger.exception(f"Adding entry failed!")
+        else:
+            logger.info(f"Programmed table sucessfully with the following information:")
+            self.dump_entry(table=table, key=key)
 
     def program_meter(self, meter, meter_index, meter_type, cir, pir, cbs, pbs):
         key = meter.make_key([gc.KeyTuple("$METER_INDEX", meter_index)])
@@ -203,12 +229,7 @@ class Client:
                 gc.DataTuple(PARAM_NAME[meter_type][3], pbs),
             ]
         )
-        try:
-            meter.entry_add(self.target, [key], [data])
-            logger.info(f"Succesfully programmed meter index {meter_index} with the following information: ")
-            self.dump_entry(table=meter, key=key)
-        except Exception:
-            logger.exception(f"Unable to program meter!")
+        meter.entry_add(self.target, [key], [data])
 
     def loop_digest(self, base_model):
         while True:
@@ -280,3 +301,6 @@ class Client:
             "trigger_timer_periodic",
         )
         self.add_entry(pktgen_app, pktgen_app_key, pktgen_app_action_data)
+
+class InvalidInputException(Exception):
+    pass

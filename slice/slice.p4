@@ -35,8 +35,7 @@ struct metadata_t {
 *************************************************************************/
 
 /***********************  P A R S E R  **************************/
-parser
-IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
+parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
               out ingress_intrinsic_metadata_t ig_intr_md) {
   // Resubmit package and intrinsic metadata
   TofinoIngressParser() tofino_parser;
@@ -175,6 +174,12 @@ action m_update(slice_id_t meter_index) {
   ig_dprsr_md.digest_type = 1;
 }
 
+action congestion(slice_id_t meter_index) {
+  meta.meter_tag = meter.execute(meter_index);
+  hdr.ipv4.ecn = 3;
+  hdr.vlan.dei = 1;
+}
+
 table m_filter {
   key = { meta.meter_tag : exact;
 }
@@ -246,7 +251,7 @@ action is_egress_border() {
   hdr.vlan.setInvalid();
 }
 
-table check_is_egress_border {
+table egress_check {
   key = { ig_tm_md.ucast_egress_port : exact;
 }
 actions = { NoAction;
@@ -257,7 +262,7 @@ size = CONST_MAX_PORTS;
 }
 
 apply {
-  // We only process packets, identifiable in a slice. Or the packet was already
+  // We only process packets, identifiable in a slice. Or if the packet was already
   // tagged. Others get dropped
   bool valid_packet = false;
   if (hdr.vlan.isValid()) {
@@ -286,7 +291,7 @@ apply {
     }
 
     if (hdr.vlan.isValid()) {
-      check_is_egress_border.apply();
+      egress_check.apply();
     }
   }
 }
