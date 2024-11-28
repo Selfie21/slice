@@ -1,6 +1,7 @@
 # Personal
 log/
 network/
+p4slice_api/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
