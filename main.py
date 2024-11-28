@@ -2,8 +2,8 @@ import sys
 from loguru import logger
 from scapy.all import Ether, Dot1Q, IP, UDP, TCP
 
-from p4slice_api.internals.controller import Client
-from p4slice_api.internals.util import ip2int
+from p4slice_api.internal.controller import Client
+from p4slice_api.internal.util import ip2int
 
 ANNOTATIONS = ["ipv4", "ipv6", "mac", "bytes"]
 logger.remove(0)
