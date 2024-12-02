@@ -3,7 +3,6 @@ from loguru import logger
 from scapy.all import Ether, Dot1Q, IP, UDP, TCP
 
 from p4slice_api.internal.controller import Client
-from p4slice_api.internal.util import ip2int
 
 ANNOTATIONS = ["ipv4", "ipv6", "mac", "bytes"]
 logger.remove(0)
@@ -18,6 +17,7 @@ ip_table.info.data_field_annotation_add(field_name="dst_addr", action_name="Ingr
 client.dump_table(ip_table)
 
 slice_table = client.get_table("Ingress.slice_ident")
+vlan_table = client.get_table("Ingress.vlan_exact")
 slice_table.info.key_field_annotation_add(field_name="dst_addr", custom_annotation="ipv4")
 slice_table.info.key_field_annotation_add(field_name="src_addr", custom_annotation="ipv4")
 
@@ -32,15 +32,15 @@ p = (
 #client.generate_packets(packet=p, interval_nanoseconds=100000000)
 meter = client.get_table("Ingress.meter")
 
-client.program_meter(meter=meter, meter_index=1, meter_type="packets", cir=10, cbs=20, pir=10, pbs=40)
-client.add_slice(src_addr='10.0.1.11', dst_addr='10.0.2.21', src_port=23, dst_port=26, protocol=17, slice_id=1)
-client.add_slice(src_addr='10.0.1.12', dst_addr='10.0.2.22', src_port=23, dst_port=26, protocol=17, slice_id=2)
+client.program_meter(meter=meter, meter_index=3, meter_type="bytes", cir=2, cbs=3, pir=2, pbs=6)
+
+#client.add_slice(src_addr='10.0.1.11', dst_addr='10.0.2.21', src_port=23, dst_port=26, protocol=17, slice_id=1)
+#client.add_slice(src_addr='10.0.1.12', dst_addr='10.0.2.22', src_port=23, dst_port=26, protocol=17, slice_id=2)
+
 
 client.dump_table(slice_table)
+client.dump_table(vlan_table)
 
-client.info_table(meter)
-client.add_egress_entry(3)
-client.add_vlan_route(1, "ff:ff:ff:ff:ff:ff", 1)
-#base_model = client.bfrt_info.learn_get("digest_inst")
-#client.loop_digest(base_model)
+base_model = client.bfrt_info.learn_get("digest_inst")
+client.loop_digest(base_model)
 

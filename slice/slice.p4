@@ -13,8 +13,12 @@
 #define CONST_DEI 0
 
 struct digest_t {
-  bit<8> meter_tag;
+  bit<3> digest_type;
   slice_id_t slice_id;
+  ip4addr_t src_addr;
+  ip4addr_t dst_addr;
+  bit<16> src_port;
+  bit<16> dst_port;
 }
 
 struct pvs_pgen_key_t {
@@ -171,14 +175,8 @@ default_action = drop();
 // Meter
 action m_update(slice_id_t meter_index) {
   meta.meter_tag = meter.execute(meter_index);
-  ig_dprsr_md.digest_type = 1;
 }
 
-action congestion(slice_id_t meter_index) {
-  meta.meter_tag = meter.execute(meter_index);
-  hdr.ipv4.ecn = 3;
-  hdr.vlan.dei = 1;
-}
 
 table m_filter {
   key = { meta.meter_tag : exact;
@@ -275,8 +273,11 @@ apply {
   }
 
   if (valid_packet) {
-    // Update Meter and Apply meter filtering
+    // update meter, send digests and filter
     m_update(meta.slice_id);
+    if(meta.meter_tag == 8w3){
+      ig_dprsr_md.digest_type = 1;
+    }
     m_filter.apply();
 
     // Routing Decisions
@@ -307,7 +308,7 @@ control IngressDeparser(packet_out pkt, inout header_t hdr, in metadata_t meta,
 
   apply {
     if (ig_dprsr_md.digest_type == 1) {
-      digest_inst.pack({meta.meter_tag, meta.slice_id});
+      digest_inst.pack({1, meta.slice_id, hdr.ipv4.src_addr, hdr.ipv4.dst_addr, meta.src_port, meta.dst_port});
     }
     hdr.ipv4.hdr_checksum = ipv4_checksum.update(
         {hdr.ipv4.version, hdr.ipv4.ihl, hdr.ipv4.diffserv, hdr.ipv4.ecn,
