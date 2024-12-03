@@ -10,9 +10,6 @@ requires-python = "==3.10.*"
 readme = "README.md"
 license = {text = "MIT"}
 
-[tool.black]
-line-length = 130
-
 [tool.pdm]
 distribution = false
 
