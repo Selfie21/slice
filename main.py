@@ -37,6 +37,7 @@ client.program_meter(meter=meter, meter_index=3, meter_type="bytes", cir=2, cbs=
 #client.add_slice(src_addr='10.0.1.11', dst_addr='10.0.2.21', src_port=23, dst_port=26, protocol=17, slice_id=1)
 #client.add_slice(src_addr='10.0.1.12', dst_addr='10.0.2.22', src_port=23, dst_port=26, protocol=17, slice_id=2)
 
+client.add_firewall_entry(src_addr='10.0.1.11', prefix_len=24)
 
 client.dump_table(slice_table)
 client.dump_table(vlan_table)

@@ -188,6 +188,17 @@ default_action = NoAction;
 size = 8;
 }
 
+// Firewall
+table firewall {
+  key = { hdr.ipv4.src_addr : lpm;
+}
+actions = { drop;
+NoAction;
+}
+default_action = NoAction;
+size = MAX_SLICES;
+}
+
 // IP Forward
 action ipv4_forward(macaddr_t dst_addr, egress_spec_t port) {
   ig_tm_md.ucast_egress_port = port;
@@ -225,6 +236,7 @@ size = ROUTE_TABLE_SIZE;
 default_action = NoAction();
 }
 
+// VLAN
 action vlan_forward(macaddr_t dst_addr, egress_spec_t port) {
   ig_tm_md.ucast_egress_port = port;
   hdr.ethernet.src_addr = hdr.ethernet.dst_addr;
@@ -242,7 +254,6 @@ size = ROUTE_TABLE_SIZE;
 default_action = NoAction();
 }
 
-// VLAN
 action is_egress_border() {
   hdr.ethernet.ether_type = hdr.vlan.ether_type;
   hdr.ipv4.ttl = hdr.ipv4.ttl - 1;
@@ -260,6 +271,12 @@ size = CONST_MAX_PORTS;
 }
 
 apply {
+
+  // First Firewall Processing
+  if (hdr.ipv4.isValid()){
+    firewall.apply();
+  }
+
   // We only process packets, identifiable in a slice. Or if the packet was already
   // tagged. Others get dropped
   bool valid_packet = false;
@@ -308,7 +325,7 @@ control IngressDeparser(packet_out pkt, inout header_t hdr, in metadata_t meta,
 
   apply {
     if (ig_dprsr_md.digest_type == 1) {
-      digest_inst.pack({1, meta.slice_id, hdr.ipv4.src_addr, hdr.ipv4.dst_addr, meta.src_port, meta.dst_port});
+      digest_inst.pack({ig_dprsr_md.digest_type, meta.slice_id, hdr.ipv4.src_addr, hdr.ipv4.dst_addr, meta.src_port, meta.dst_port});
     }
     hdr.ipv4.hdr_checksum = ipv4_checksum.update(
         {hdr.ipv4.version, hdr.ipv4.ihl, hdr.ipv4.diffserv, hdr.ipv4.ecn,
