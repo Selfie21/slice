@@ -8,15 +8,10 @@ from scapy.all import Ether, IP, IPv6, UDP, TCP
 
 
 def get_if():
-    iface = None  # "h1-eth0"
-    for i in get_if_list():
-        if "eth0" in i:
-            iface = i
-            break
-    if not iface:
-        print("Cannot find eth0 interface")
-        exit(1)
-    return iface
+    ifaces_list = [(index, item) for index, item in enumerate(get_if_list())]
+    print(ifaces_list)
+    index = input("Choose interface to listen from: ")
+    return ifaces_list[int(index)][1]
 
 
 def main():
