@@ -1,0 +1,10 @@
+ucli
+pm
+port-add 1/- 10G NONE
+port-enb 1/-
+
+port-add 2/- 10G NONE
+port-enb 2/-
+
+port-stats-clr 1/-
+port-stats-clr 2/-
