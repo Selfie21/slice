@@ -1,5 +1,7 @@
 # Personal
 log/
 build/
+network/
 p4slice_api/
 tmp
+.build/
