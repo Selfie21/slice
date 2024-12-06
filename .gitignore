@@ -3,5 +3,7 @@ log/
 build/
 network/
 p4slice_api/
-tmp
 .build/
+
+tmp
+.clang-format
