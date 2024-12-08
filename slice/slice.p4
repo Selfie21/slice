@@ -299,13 +299,16 @@ apply {
 
     // Routing Decisions
     if (hdr.vlan.isValid()) {
-      vlan_exact.apply();
-    } else if (hdr.ipv4.isValid()) {
-      ipv4_lpm.apply();
-    } else if (hdr.ipv6.isValid()) {
-      ipv6_lpm.apply();
-    } else {
-      drop();
+      // If we have no VLAN routing we opt for normal IP routing
+      if (vlan_exact.apply().miss){
+        if (hdr.ipv4.isValid()) {
+          ipv4_lpm.apply();
+        }else if (hdr.ipv6.isValid()) {
+          ipv6_lpm.apply();
+        } else {
+          drop();
+        }
+      }
     }
 
     if (hdr.vlan.isValid()) {
