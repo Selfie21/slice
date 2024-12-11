@@ -196,10 +196,6 @@ size = 8;
 }
 
 // For ARP Requests we flood on all ports
-action flood() {
-    ig_tm_md.mcast_grp_a = 1;
-}
-
 action forward(egress_spec_t port) {
   ig_tm_md.ucast_egress_port = port;
 }
@@ -207,7 +203,7 @@ action forward(egress_spec_t port) {
 table arp {
   key = { hdr.arp.tpa : exact;
 }
-actions = { flood;
+actions = {
 forward;
 NoAction;
 }
