@@ -12,6 +12,7 @@ typedef bit<16> ethertype_t;
 const ethertype_t TYPE_IPV4 = 0x800;
 const ethertype_t TYPE_IPV6 = 0x86dd;
 const ethertype_t TYPE_VLAN = 0x8100;
+const ethertype_t TYPE_ARP = 0x0806;
 
 typedef bit<8> iptype_t;
 const iptype_t IP_PROTO_ICMP = 1;
@@ -104,11 +105,15 @@ header icmp_h {
 }
 
 header arp_t {
-  bit<16> hw_type;
-  bit<16> prototype;
-  bit<8> hw_addr_len;
-  bit<8> proto_addr_len;
-  bit<16> opcode;
+  bit<16> hrd;
+  bit<16> pro;
+  bit<8> hln;
+  bit<8> pln;
+  bit<16> op;
+  macaddr_t sha;
+  ip4addr_t spa;
+  macaddr_t tha; 
+  ip4addr_t tpa;
 }
 
 header ipv6_srh_t {
@@ -147,6 +152,7 @@ struct header_t {
   pktgen_recirc_header_t recirc;
   // normal header
   ethernet_t ethernet;
+  arp_t arp;
   vlan_t vlan;
   ipv4_t ipv4;
   ipv6_t ipv6;

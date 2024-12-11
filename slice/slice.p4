@@ -64,6 +64,8 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
     transition select(hdr.ethernet.ether_type) {
     TYPE_VLAN:
       parse_vlan;
+    TYPE_ARP:
+      parse_arp;
     TYPE_IPV4:
       parse_ipv4;
     TYPE_IPV6:
@@ -83,6 +85,11 @@ parser IngressParser(packet_in pkt, out header_t hdr, out metadata_t meta,
       default:
         accept;
     }
+  }
+
+  state parse_arp {
+      pkt.extract(hdr.arp);
+      transition accept;
   }
 
   state parse_ipv4 {
@@ -169,7 +176,7 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
   NoAction;
 }
 size = MAX_SLICES;
-default_action = drop();
+default_action = NoAction();
 }
 
 // Meter
@@ -186,6 +193,26 @@ NoAction;
 }
 default_action = NoAction;
 size = 8;
+}
+
+// For ARP Requests we flood on all ports
+action flood() {
+    ig_tm_md.mcast_grp_a = 1;
+}
+
+action forward(egress_spec_t port) {
+  ig_tm_md.ucast_egress_port = port;
+}
+
+table arp {
+  key = { hdr.arp.tpa : exact;
+}
+actions = { flood;
+forward;
+NoAction;
+}
+default_action = NoAction;
+size = ROUTE_TABLE_SIZE;
 }
 
 // Firewall
@@ -285,8 +312,6 @@ apply {
     meta.slice_id = (bit<8>)hdr.vlan.vlan_id;
   } else if (slice_ident.apply().hit) {
     valid_packet = true;
-  } else {
-    drop();
   }
 
   if (valid_packet) {
@@ -314,6 +339,10 @@ apply {
     if (hdr.vlan.isValid()) {
       egress_check.apply();
     }
+  }else if(hdr.arp.isValid()){
+    arp.apply();
+  }else{
+    drop();
   }
 }
 }
