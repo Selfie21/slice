@@ -1,0 +1,36 @@
+ucli
+pm
+
+port-add 1/- 100G NONE
+port-enb 1/-
+
+port-add 2/- 100G NONE
+port-enb 2/-
+
+port-add 3/- 100G NONE
+port-enb 3/-
+
+port-add 4/- 100G NONE
+port-enb 4/-
+
+port-add 5/- 100G NONE
+port-enb 5/-
+
+port-add 6/- 100G NONE
+port-enb 6/-
+
+port-add 7/- 100G NONE
+port-enb 7/-
+
+port-add 8/- 100G NONE
+port-enb 8/-
+
+port-stats-clr 1/-
+port-stats-clr 2/-
+port-stats-clr 3/-
+port-stats-clr 4/-
+port-stats-clr 5/-
+port-stats-clr 6/-
+port-stats-clr 7/-
+port-stats-clr 8/-
+
