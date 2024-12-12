@@ -25,6 +25,30 @@ port-enb 7/-
 port-add 8/- 100G NONE
 port-enb 8/-
 
+port-add 25/- 100G NONE
+port-enb 25/-
+
+port-add 26/- 100G NONE
+port-enb 26/-
+
+port-add 27/- 100G NONE
+port-enb 27/-
+
+port-add 28/- 100G NONE
+port-enb 28/-
+
+port-add 29/- 100G NONE
+port-enb 29/-
+
+port-add 30/- 100G NONE
+port-enb 30/-
+
+port-add 31/- 100G NONE
+port-enb 31/-
+
+port-add 32/- 100G NONE
+port-enb 32/-
+
 port-stats-clr 1/-
 port-stats-clr 2/-
 port-stats-clr 3/-
@@ -33,4 +57,13 @@ port-stats-clr 5/-
 port-stats-clr 6/-
 port-stats-clr 7/-
 port-stats-clr 8/-
+
+port-stats-clr 25/-
+port-stats-clr 26/-
+port-stats-clr 27/-
+port-stats-clr 28/-
+port-stats-clr 29/-
+port-stats-clr 30/-
+port-stats-clr 31/-
+port-stats-clr 32/-
 
