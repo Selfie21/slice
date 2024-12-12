@@ -147,7 +147,7 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
                 inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
                 inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
   Meter<bit<8>>(MAX_SLICES, MeterType_t.BYTES) meter;
-  action drop() { ig_dprsr_md.drop_ctl = 1; }
+  action drop() {}
 
   // Slice
   action set_sliceid(slice_id_t slice_id) {
