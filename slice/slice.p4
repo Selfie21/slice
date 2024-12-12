@@ -169,7 +169,6 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
   table slice_ident {
     key = { hdr.ipv4.dst_addr : exact;
     hdr.ipv4.src_addr : exact;
-    hdr.ipv4.protocol : exact;
   }
   actions = { set_sliceid;
   drop;
