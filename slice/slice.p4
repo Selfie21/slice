@@ -147,7 +147,9 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
                 inout ingress_intrinsic_metadata_for_deparser_t ig_dprsr_md,
                 inout ingress_intrinsic_metadata_for_tm_t ig_tm_md) {
   Meter<bit<8>>(MAX_SLICES, MeterType_t.BYTES) meter;
-  action drop() {}
+  action drop() {
+    ig_dprsr_md.drop_ctl = 1;
+  }
 
   // Slice
   action set_sliceid(slice_id_t slice_id) {
@@ -314,24 +316,25 @@ apply {
     if(meta.meter_tag == 8w3){
       ig_dprsr_md.digest_type = 1;
     }
-    m_filter.apply();
 
-    // Routing Decisions
-    if (hdr.vlan.isValid()) {
-      // If we have no VLAN routing we opt for normal IP routing
-      if (vlan_exact.apply().miss){
-        if (hdr.ipv4.isValid()) {
-          ipv4_lpm.apply();
-        }else if (hdr.ipv6.isValid()) {
-          ipv6_lpm.apply();
-        } else {
-          drop();
+    if (m_filter.apply().miss){
+      // Routing Decisions
+      if (hdr.vlan.isValid()) {
+        // If we have no VLAN routing we opt for normal IP routing
+        if (vlan_exact.apply().miss){
+          if (hdr.ipv4.isValid()) {
+            ipv4_lpm.apply();
+          }else if (hdr.ipv6.isValid()) {
+            ipv6_lpm.apply();
+          } else {
+            drop();
+          }
         }
       }
-    }
 
-    if (hdr.vlan.isValid()) {
-      egress_check.apply();
+      if (hdr.vlan.isValid()) {
+        egress_check.apply();
+      }
     }
   }else if(hdr.arp.isValid()){
     arp.apply();
