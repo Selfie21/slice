@@ -166,9 +166,12 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
     hdr.ethernet.ether_type = TYPE_VLAN;
   }
 
-  table slice_ident {
+    table slice_ident {
     key = { hdr.ipv4.dst_addr : exact;
     hdr.ipv4.src_addr : exact;
+    hdr.ipv4.protocol : exact;
+    meta.src_port : exact;
+    meta.dst_port : exact;
   }
   actions = { set_sliceid;
   drop;
