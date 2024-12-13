@@ -303,8 +303,10 @@ apply {
   // tagged. Others get dropped
   bool valid_packet = false;
   if (hdr.vlan.isValid()) {
-    valid_packet = true;
-    meta.slice_id = (bit<8>)hdr.vlan.vlan_id;
+    if (slice_ident.apply().hit) {
+      valid_packet = true;
+      meta.slice_id = (bit<8>)hdr.vlan.vlan_id;
+    }
   } else if (slice_ident.apply().hit) {
     valid_packet = true;
   }
