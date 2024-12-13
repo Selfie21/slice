@@ -1780,14 +1780,3 @@
 		}
 	}
 }
-{
-	"start":	{
-		"connected":	[],
-		"version":	"iperf 3.12",
-		"system_info":	"Linux node1 6.1.0-26-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.112-1 (2024-09-30) x86_64"
-	},
-	"intervals":	[],
-	"end":	{
-	},
-	"error":	"interrupt - the server has terminated"
-}

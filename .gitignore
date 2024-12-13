@@ -6,3 +6,4 @@ p4slice_api/
 
 tmp
 .clang-format
+.venv
