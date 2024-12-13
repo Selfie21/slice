@@ -3,6 +3,7 @@ log/
 build/
 p4slice_api/
 .build/
+network/topology.json
 
 tmp
 .clang-format
