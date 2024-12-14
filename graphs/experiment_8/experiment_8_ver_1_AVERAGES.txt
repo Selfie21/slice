@@ -1,0 +1,39 @@
+
+RUN 1
+Averages from 0-30 seconds:
+Bits per Second: 900.0061963392544
+Jitter: 0.009963097372142325
+Lost Packets: 0.5806451612903226
+RTT: 0.04670967741935484
+
+Averages from 30-60 seconds:
+Bits per Second: 900.0178793769097
+Jitter: 0.01047285092987955
+Lost Packets: 0.0
+RTT: 0.04375862068965518
+
+RUN 2
+Averages from 0-30 seconds:
+Bits per Second: 900.0005610999547
+Jitter: 0.009221628672546096
+Lost Packets: 0.9032258064516129
+RTT: 0.03819354838709678
+
+Averages from 30-60 seconds:
+Bits per Second: 899.7491747798123
+Jitter: 0.009543059225837947
+Lost Packets: 23.344827586206897
+RTT: 0.03644827586206896
+
+RUN 3
+Averages from 0-30 seconds:
+Bits per Second: 900.0099354160833
+Jitter: 0.009753735844691195
+Lost Packets: 0.0
+RTT: 0.034516129032258064
+
+Averages from 30-60 seconds:
+Bits per Second: 900.0208577642942
+Jitter: 0.009171463542504402
+Lost Packets: 0.0
+RTT: 0.032172413793103455
