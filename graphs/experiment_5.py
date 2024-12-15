@@ -3,7 +3,7 @@ import pandas as pd
 from pprint import pprint
 
 EXPERIMENT_NAME = "experiment_5"
-FILE_PATH = f"/home/selfie/Documents/pro/slice/test_data/{EXPERIMENT_NAME}/"
+FILE_PATH = f"/home/selfie/Documents/pro/p4slice/slice/test_data/{EXPERIMENT_NAME}/"
 PORTS_START = ["ports_start_1.json", "ports_start_2.json", "ports_start_3.json"]
 PORTS_END = ["ports_end_1.json", "ports_end_2.json", "ports_end_3.json"]
 GIGABIT = 1000000000
@@ -46,7 +46,7 @@ for i in range(len(PORTS_END)):
     df_all["rx_rate_l1"] = (df_all["rx_rate_l1"].values / GIGABIT).round(decimals=DECIMAL_PLACES)
     df_all["rx_rate_l2"] = (df_all["rx_rate_l2"].values / GIGABIT).round(decimals=DECIMAL_PLACES)
 
-    df_all.to_csv(f"graphs/experiment_5/{EXPERIMENT_NAME}_{RUN_NUMBER}.csv", sep=',')
+    df_all.to_csv(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_5/{EXPERIMENT_NAME}_{RUN_NUMBER}.csv", sep=',')
     print(df_all)
 
 
@@ -63,5 +63,5 @@ for i in range(len(PORTS_END)):
     )
     final_sum += output_string
 
-with open(f"graphs/experiment_5/{EXPERIMENT_NAME}_SUM.txt", 'w') as file:
+with open(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_5/{EXPERIMENT_NAME}_SUM.txt", 'w') as file:
     file.write(final_sum)

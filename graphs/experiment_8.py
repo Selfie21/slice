@@ -4,8 +4,8 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
-EXPERIMENT_NAME = "experiment_8_ver_2"
-FILE_PATH = f"/home/selfie/Documents/pro/slice/test_data/{EXPERIMENT_NAME}/"
+EXPERIMENT_NAME = "experiment_8_ver_1"
+FILE_PATH = f"/home/selfie/Documents/pro/p4slice/slice/test_data/{EXPERIMENT_NAME}/"
 SAMPLES_SERVER = ["server1.json", "server2.json", "server3.json"]
 SAMPLES_PING = ["ping1.log", "ping2.log", "ping3.log"]
 final_averages = ""
@@ -25,7 +25,7 @@ for i in range(len(SAMPLES_SERVER)):
             "end": int(interval["sum"]["end"]),
             "bits_per_second": interval["sum"]["bits_per_second"] / 1000000,
             "jitter": interval["sum"]["jitter_ms"],
-            "lost_packets": interval["sum"]["lost_packets"]
+            "lost_packets": interval["sum"]["lost_percent"]
         }
         for interval in intervals
     ]
@@ -63,12 +63,12 @@ for i in range(len(SAMPLES_SERVER)):
         "Averages from 0-30 seconds:\n"
         f"Bits per Second: {average_0_30_bits_per_second}\n"
         f"Jitter: {average_0_30_jitter}\n"
-        f"Lost Packets: {average_0_30_lost_packets}\n"
+        f"Packet Loss: {average_0_30_lost_packets}\n"
         f"RTT: {average_0_30_rtt}\n"
         "\nAverages from 30-60 seconds:\n"
         f"Bits per Second: {average_30_60_bits_per_second}\n"
         f"Jitter: {average_30_60_jitter}\n"
-        f"Lost Packets: {average_30_60_lost_packets}\n"
+        f"Packet Loss: {average_30_60_lost_packets}\n"
         f"RTT: {average_30_60_rtt}\n"
     )
 
@@ -87,7 +87,7 @@ for i in range(len(SAMPLES_SERVER)):
     axes[1].grid(True)
 
     sns.lineplot(x=df["start"], y=df["lost_packets"], ax=axes[2], color="tomato", marker="s", label="Lost Packets")
-    axes[2].set_ylabel("#Lost Packets")
+    axes[2].set_ylabel("Packet Loss %")
     axes[2].legend()
     axes[2].grid(True)
 
@@ -102,11 +102,11 @@ for i in range(len(SAMPLES_SERVER)):
 
     axes[2].set_xlabel("Time in Seconds")
     plt.tight_layout()
-    #plt.savefig(f"graphs/experiment_8/{EXPERIMENT_NAME}_{RUN_NUMBER}.png", dpi=400)
-    #plt.show()
+    plt.savefig(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_8/{EXPERIMENT_NAME}_{RUN_NUMBER}.png", dpi=400)
+    plt.show()
 
     final_averages += output_string
 
-with open(f"graphs/experiment_8/{EXPERIMENT_NAME}_AVERAGES.txt", 'w') as file:
+with open(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_8/{EXPERIMENT_NAME}_AVERAGES.txt", 'w') as file:
     file.write(final_averages)
 print(final_averages)
