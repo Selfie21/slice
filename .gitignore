@@ -8,3 +8,5 @@ network/topology.json
 tmp
 .clang-format
 .venv
+*.png
+*.csv
