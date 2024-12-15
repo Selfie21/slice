@@ -86,7 +86,7 @@ for i in range(len(SAMPLES_SERVER)):
     axes[1].legend()
     axes[1].grid(True)
 
-    sns.lineplot(x=df["start"], y=df["lost_packets"], ax=axes[2], color="tomato", marker="s", label="Lost Packets")
+    sns.lineplot(x=df["start"], y=df["lost_packets"], ax=axes[2], color="tomato", marker="s", label="Percentage Packet Loss")
     axes[2].set_ylabel("Packet Loss %")
     axes[2].legend()
     axes[2].grid(True)

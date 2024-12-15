@@ -4,7 +4,8 @@ build/
 p4slice_api/
 .build/
 network/topology.json
-
+graphs/experiment_5/
+graphs/experiment_8/
 tmp
 .clang-format
 .venv
