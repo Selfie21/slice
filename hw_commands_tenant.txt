@@ -1,10 +1,20 @@
 ucli
 pm
-port-add 13/0 100G RS
-port-enb 13/-
+port-add 1/0 40G NONE
+port-enb 1/-
 
-port-add 14/- 100G RS
-port-enb 14/-
+port-add 2/0 40G NONE
+port-enb 2/0
 
-port-stats-clr 13/-
-port-stats-clr 14/-
+port-add 3/0 10G NONE
+port-enb 3/0
+
+port-add 4/0 10G NONE
+port-enb 4/0
+
+port-add 13/0 10G NONE
+port-enb 13/0
+
+port-add 14/0 10G NONE
+port-enb 14/0
+
