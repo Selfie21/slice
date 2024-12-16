@@ -22,8 +22,7 @@ for i in range(len(PORTS_START)):
         "rx_rate_l2": data["rx_rate_l2"]
     }
     df_start = pd.DataFrame(extracted_values)
-
-for i in range(len(PORTS_END)):
+    
     RUN_NUMBER = i + 1
     with open(FILE_PATH + PORTS_END[i], "r") as fd:
         data = json.load(fd)

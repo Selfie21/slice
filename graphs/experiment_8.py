@@ -9,7 +9,7 @@ FILE_PATH = f"/home/selfie/Documents/pro/p4slice/slice/test_data/{EXPERIMENT_NAM
 SAMPLES_SERVER = ["server1.json", "server2.json", "server3.json"]
 SAMPLES_PING = ["ping1.log", "ping2.log", "ping3.log"]
 final_averages = ""
-DECIMAL_PLACES = 10
+DECIMAL_PLACES = 4
 
 # Prepare Data
 for i in range(len(SAMPLES_SERVER)):
@@ -77,7 +77,7 @@ for i in range(len(SAMPLES_SERVER)):
     fig, axes = plt.subplots(4, 1, figsize=(10, 12), sharex=True)
 
     sns.lineplot(x=df["start"], y=df["bits_per_second"], ax=axes[0], color="royalblue", marker="o", label="Mbit/s")
-    axes[0].set_ylabel("Mbit/s")
+    axes[0].set_ylabel("Bandwidth [Mbit/s]")
     axes[0].legend()
     axes[0].grid(True)
 
@@ -93,6 +93,7 @@ for i in range(len(SAMPLES_SERVER)):
 
     sns.lineplot(x=df["start"], y=df["rtt"], ax=axes[3], color="dodgerblue", marker="x", label="Round Trip Time")
     axes[3].set_ylabel("RTT [ms]")
+    axes[3].set_xlabel("Time [seconds]")
     axes[3].legend()
     axes[3].grid(True)
 
@@ -102,8 +103,8 @@ for i in range(len(SAMPLES_SERVER)):
 
     axes[2].set_xlabel("Time in Seconds")
     plt.tight_layout()
-    plt.savefig(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_8/{EXPERIMENT_NAME}_{RUN_NUMBER}.png", dpi=400)
-    plt.show()
+    #plt.savefig(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_8/{EXPERIMENT_NAME}_{RUN_NUMBER}.png", dpi=400)
+    #plt.show()
 
     final_averages += output_string
 
