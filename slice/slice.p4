@@ -338,8 +338,6 @@ apply {
         egress_check.apply();
       }
     }
-  }else if(hdr.arp.isValid()){
-    arp.apply();
   }else{
     drop();
   }
