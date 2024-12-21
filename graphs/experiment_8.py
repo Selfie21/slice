@@ -3,7 +3,7 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
-EXPERIMENT_NAME = "experiment_8_ver_3"
+EXPERIMENT_NAME = "experiment_8_ver_2"
 FILE_PATH = f"/home/selfie/Documents/pro/p4slice/slice/test_data/{EXPERIMENT_NAME}/"
 SAMPLES_SERVER = ["server1.json"]
 SAMPLES_PING = ["ping1.log"]

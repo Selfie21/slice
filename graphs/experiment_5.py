@@ -87,7 +87,7 @@ for i in range(1):
 
     # Adding labels and titles
     ax.set_xlabel("Rates")
-    ax.set_ylabel("Values (Gbit/s)")
+    ax.set_ylabel("Bandwidth (Gbit/s)")
     ax.set_title("Rates of aggsw0 and aggsw2")
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
