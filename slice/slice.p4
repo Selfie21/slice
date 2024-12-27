@@ -166,13 +166,24 @@ control Ingress(inout header_t hdr, inout metadata_t meta,
     hdr.ethernet.ether_type = TYPE_VLAN;
   }
 
-    table slice_ident {
-    key = { hdr.ipv4.dst_addr : exact;
-    hdr.ipv4.src_addr : exact;
-    hdr.ipv4.protocol : exact;
-    meta.src_port : exact;
-    meta.dst_port : exact;
-  }
+table slice_ident_flow {
+  key = { hdr.ipv4.dst_addr : exact;
+  hdr.ipv4.src_addr : exact;
+  hdr.ipv4.protocol : exact;
+  meta.src_port : exact;
+  meta.dst_port : exact;
+}
+actions = {
+  set_sliceid;
+  drop;
+  NoAction;
+}
+size = MAX_SLICES;
+default_action = NoAction();
+}
+
+table slice_ident_port {
+  key = { ig_intr_md.ingress_port : exact;}
   actions = { set_sliceid;
   drop;
   NoAction;
@@ -308,7 +319,9 @@ apply {
   if (hdr.vlan.isValid()) {
       meta.slice_id = (bit<8>)hdr.vlan.vlan_id;
   }
-  if (slice_ident.apply().hit) {
+  if (slice_ident_flow.apply().hit) {
+    valid_packet = true;
+  }else if (slice_ident_port.apply().hit) {
     valid_packet = true;
   }
 
