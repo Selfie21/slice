@@ -1,9 +1,10 @@
+import re
 import json
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
-EXPERIMENT_NAME = "experiment_8_ver_2"
+EXPERIMENT_NAME = "experiment_8_ver_1"
 FILE_PATH = f"/home/selfie/Documents/pro/p4slice/slice/test_data/{EXPERIMENT_NAME}/"
 SAMPLES_SERVER = ["server1.json"]
 SAMPLES_PING = ["ping1.log"]
@@ -29,6 +30,19 @@ for i in range(len(SAMPLES_SERVER)):
         for interval in intervals
     ]
     df = pd.DataFrame(parsed_data)
+
+    # Ping Responses
+    icmp_seq = []
+    rtt = []
+    with open(FILE_PATH + SAMPLES_PING[i], "r") as file:
+        for line in file:
+            seq_match = re.search(r"icmp_seq=(\d+)", line)
+            time_match = re.search(r"time=([\d.]+)", line)
+            
+            if seq_match and time_match and int(seq_match.group(1)) <= 60:
+                icmp_seq.append(int(seq_match.group(1)))
+                rtt.append(float(time_match.group(1)))
+    df["rtt"] = rtt
 
     # Averages without attack and during attack
     data_0_30 = df[(df["start"] >= 0) & (df["start"] <= 30)]
@@ -56,7 +70,7 @@ for i in range(len(SAMPLES_SERVER)):
 
     # Plots
     sns.set_theme(style="whitegrid")
-    fig, axes = plt.subplots(3, 1, figsize=(10, 12), sharex=True)
+    fig, axes = plt.subplots(4, 1, figsize=(10, 12), sharex=True)
 
     sns.lineplot(x=df["start"], y=df["bits_per_second"], ax=axes[0], color="royalblue", marker="o", label="Mbit/s")
     axes[0].set_ylabel("Bandwidth [Mbit/s]")
@@ -73,9 +87,14 @@ for i in range(len(SAMPLES_SERVER)):
     axes[2].legend()
     axes[2].grid(True)
 
+    sns.lineplot(x=df["start"], y=df["rtt"], ax=axes[3], color="dodgerblue", marker="x", label="Round Trip Time")
+    axes[3].set_ylabel("RTT [ms]")
+    axes[3].legend()
+    axes[3].grid(True)
+
     for ax in axes:
-        ax.axvline(x=120, color="darkorange", linestyle="--")
-        ax.text(120, ax.get_ylim()[1], "Time of Attack", color="darkorange", ha="center", va="bottom", fontsize=12)
+        ax.axvline(x=30, color="darkorange", linestyle="--")
+        ax.text(30, ax.get_ylim()[1], "Time of Attack", color="darkorange", ha="center", va="bottom", fontsize=12)
 
     axes[2].set_xlabel("Time in Seconds")
     plt.tight_layout()
