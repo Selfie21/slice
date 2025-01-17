@@ -1716,34 +1716,6 @@
 				"omitted":	false,
 				"sender":	false
 			}
-		}, {
-			"streams":	[{
-					"socket":	6,
-					"start":	60.000064,
-					"end":	60.206098,
-					"seconds":	0.20603400468826294,
-					"bytes":	0,
-					"bits_per_second":	0,
-					"jitter_ms":	0.00250797256865972,
-					"lost_packets":	0,
-					"packets":	0,
-					"lost_percent":	0,
-					"omitted":	false,
-					"sender":	false
-				}],
-			"sum":	{
-				"start":	60.000064,
-				"end":	60.206098,
-				"seconds":	0.20603400468826294,
-				"bytes":	0,
-				"bits_per_second":	0,
-				"jitter_ms":	0.00250797256865972,
-				"lost_packets":	0,
-				"packets":	0,
-				"lost_percent":	0,
-				"omitted":	false,
-				"sender":	false
-			}
 		}],
 	"end":	{
 		"streams":	[{
