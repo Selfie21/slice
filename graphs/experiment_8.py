@@ -8,8 +8,8 @@ EXPERIMENT_NAME = "experiment_8_ver_4"
 FILE_PATH = f"/home/selfie/Documents/pro/p4slice/slice/test_data/{EXPERIMENT_NAME}/"
 SAMPLES_SERVER = ["server1_64_10.json", "server1_64_25.json", "server1_64_50.json", "server1_64_75.json", "server1_64_775.json", "server1_64_80.json", "server1_64_85.json", "server1_64_99.json"]
 SAMPLES_PING = ["ping1_64_10.log", "ping1_64_25.log", "ping1_64_50.log", "ping1_64_75.log", "ping1_64_775.log", "ping1_64_80.log", "ping1_64_85.log", "ping1_64_99.log"] 
-#SAMPLES_SERVER = ["server1_128.json", "server2_128.json", "server3_128.json"]
-#SAMPLES_PING = ["ping1_128.log", "ping2_128.log", "ping3_128.log"]
+#SAMPLES_SERVER = ["server1_128.json"]
+#SAMPLES_PING = ["ping1_128.log"]
 final_averages = ""
 DECIMAL_PLACES = 4
 

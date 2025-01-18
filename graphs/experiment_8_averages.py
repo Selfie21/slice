@@ -45,11 +45,11 @@ sns.barplot(
     palette="viridis"
 )
 metric = "Bandwidth [Mbit/s]"
-plt.title(metric + " vs Allocation limited by P4Slice", fontsize=14)
-plt.xlabel("Allocation limited by P4Slice (%)", fontsize=12)
-plt.ylabel(f"{metric} over Time Interval [average]", fontsize=12)
-plt.legend(title="Time Interval", fontsize=10)
-plt.xticks(rotation=45)
+plt.title(metric + " vs Allocation limited by P4Slice", fontsize=20)
+plt.xlabel("Allocation limited by P4Slice (%)", fontsize=18)
+plt.ylabel(f"{metric} over Time Interval [average]", fontsize=18)
+plt.legend(title="Time Interval", fontsize=18)
+plt.xticks(rotation=45, fontsize=16)
 plt.tight_layout()
 plt.savefig(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_8/allocation_{metric.replace("/","")}.png", dpi=400)
 plt.show()

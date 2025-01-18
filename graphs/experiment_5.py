@@ -86,12 +86,12 @@ for i in range(1):
     bars_end = ax.bar(x + bar_width / 2, ports_end_values, bar_width, label="aggsw2", color=colors2)
 
     # Adding labels and titles
-    ax.set_xlabel("Rates")
-    ax.set_ylabel("Bandwidth (Gbit/s)")
-    ax.set_title("Rates of aggsw0 and aggsw2")
+    ax.set_xlabel("Rates", fontsize=20)
+    ax.set_ylabel("Bandwidth (Gbit/s)", fontsize=20)
+    ax.set_title("Rates of aggsw0 and aggsw2", fontsize=20)
     ax.set_xticks(x)
-    ax.set_xticklabels(labels)
-    ax.legend()
+    ax.set_xticklabels(labels, fontsize=18)
+    ax.legend(fontsize=18)
 
     # Adding value annotations
     for bars in [bars_start, bars_end]:
@@ -101,7 +101,7 @@ for i in range(1):
                         xy=(bar.get_x() + bar.get_width() / 2, height),
                         xytext=(0, 3),
                         textcoords="offset points",
-                        ha='center', va='bottom')
+                        ha='center', va='bottom', fontsize=14)
     plt.tight_layout()
     plt.savefig(f"/home/selfie/Documents/pro/p4slice/slice/graphs/experiment_5/{EXPERIMENT_NAME}_{RUN_NUMBER}.png", dpi=400)
     plt.show()
